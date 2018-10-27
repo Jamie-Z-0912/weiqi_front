@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9,IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8">
+    <title>个人中心 学员端课后系统</title>
+</head>
+<body>
+<!--classIn-menu-->
+<div class="classIn-menu">
+    <button type="button" class="head-wrap" id="headWrap"></button>
+    <ul class="list shirk-nav" id="navList">
+        <li data-id="1"><a href="javascript:;" data-text="我的积分">我的积分</a><span class="icon icon-01"></span></li>
+        <li data-id="2"><a href="javascript:;" data-text="我的道具">我的道具</a><span class="icon icon-02"></span></li>
+        <li data-id="3"><a href="javascript:;" data-text="我的奖杯">我的奖杯</a><span class="icon icon-03"></span></li>
+        <li data-id="4"><a href="javascript:;" data-text="礼品商城">礼品商城</a><span class="icon icon-04"></span></li>
+    </ul>
+    <button class="btn-back" id="historyBack"></button>
+</div>
+<!--/classIn-menu-->
+
+<!--score-student-wrapper-->
+<div class="score-student-wrapper">
+    <div class="inner-content" id="content"></div>
+</div>
+<!--/score-student-wrapper-->
+<!--我的积分-->
+<script type="text/html" id="tpl-score">
+    <!--score-list-box-->
+    <div class="score-list-box">
+        <div class="bg-blur"></div>
+        <div class="item">
+            <dl>
+                <dt><img src="images/score_star.png" alt="" /></dt>
+                <dd class="name">课堂获得积分</dd>
+                <dd class="score">{{in_point}}</dd>
+            </dl>
+        </div>
+        <div class="item">
+            <dl>
+                <dt><img src="images/score_star.png" alt="" /></dt>
+                <dd class="name">课后获得积分</dd>
+                <dd class="score">{{out_point}}</dd>
+            </dl>
+        </div>
+        <div class="item">
+            <dl>
+                <dt><img src="images/score_star.png" alt="" /></dt>
+                <dd class="name">已用积分</dd>
+                <dd class="score">{{use_point}}</dd>
+            </dl>
+        </div>
+        <div class="item">
+            <dl>
+                <dt><img src="images/score_star.png" alt="" /></dt>
+                <dd class="name">现有积分</dd>
+                <dd class="score">{{point}}</dd>
+            </dl>
+        </div>
+    </div>
+    <!--/score-list-box-->
+</script>
+
+<!--我的道具-->
+<script type="text/html" id="tpl-tools">
+    <!--store-list-box-->
+    <div class="store-list-box tools-list-box">
+        <div class="scroll-wrap">
+            {{each resultList as value i}}
+                {{if headwearId != value.id}}
+                <div class="item">
+                    <dl>
+                        <dt><a>{{if value.pic_url}}<img src="{{value.pic_url}}" alt="{{value.name}}" />{{/if}}</a></dt>
+                        <dd class="bt-name">{{value.name}}</dd>
+                        <dd class="bt-info">
+                            {{if 4 != value.type}}
+                            <span class="clothes-num">数量: {{value.num}}</span>
+                            {{else}}
+                            <button type="button" class="btn-use-now"  data-id="{{value.id}}">{{value.type}}</button>
+                            {{/if}}
+                        </dd>
+                    </dl>
+                </div>
+                {{/if}}
+            {{/each}}
+        </div>
+    </div>
+    <!--/store-list-box-->
+</script>
+
+<!--我的奖牌-->
+<script type="text/html" id="tpl-prize">
+<div class="prize-list-box">
+    <div class="flex-box">
+        {{each resultList as value}}
+                <div class="prize-item">
+                <img src="{{value.prize_img}}" alt="{{value.prize_name}}">
+            </div>
+        {{/each}}
+    </div>
+</div>
+</script>
+<!--我的奖牌-没有奖牌-->
+<script type="text/html" id="tpl-prizeNone">
+    <div class="prize-list-box">
+        <div class="flex-box" style="align-items: center;justify-content: center;font-weight: bold; -webkit-text-stroke:.01rem #28241b;">您还未获得任何奖杯</div>
+    </div>
+</script>
+<!--礼品商城-->
+<script type="text/html" id="tpl-store">
+    <!--store-list-box-->
+    <div class="store-list-box">
+        <div class="top-info">
+            <div class="change">
+                <select name="type" id="type">
+                    <option value="">种类</option>
+                    <option value="1" {{if 1 == type}}selected{{/if}}>战绩保护卡</option>
+                    <option value="2" {{if 2 == type}}selected{{/if}}>悔棋卡</option>
+                    <option value="3" {{if 3 == type}}selected{{/if}}>提示卡</option>
+                    <option value="4" {{if 4 == type}}selected{{/if}}>头饰</option>
+                    <option value="5" {{if 5 == type}}selected{{/if}}>服装</option>
+                    <option value="6" {{if 6 == type}}selected{{/if}}>实物</option>
+                </select>
+                <select name="orderType" id="orderType">
+                    <option value="">积分</option>
+                    <option value="1" {{if 1 == orderType}}selected{{/if}}>积分升序</option>
+                    <option value="2" {{if 2 == orderType}}selected{{/if}}>积分降序</option>
+                </select>
+            </div>
+            <h3>我的积分：{{point}}分</h3>
+        </div>
+        <div class="scroll-wrap">
+            {{each resultList as value i}}
+            <div class="item">
+                <dl>
+                    <dt><a>{{if value.pic_url}}<img src="{{value.pic_url}}" alt="{{value.name}}" />{{/if}}</a></dt>
+                    <dd class="text-info">
+                        <p class="inline">
+                            <span class="name">{{value.name}}</span>
+                            <span class="point">{{value.point}}积分</span>
+                        </p>
+                    </dd>
+                    <dd class="bt-info">
+                        <button type="button" class="btn-get-now" data-id="{{value.id}}"></button>
+                    </dd>
+                </dl>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <!--/store-list-box-->
+</script>
+<!--用户模板-->
+<script type="text/html" id="tpl-user">
+    <div class="photo">
+        <div class="circle">
+            <img src="{{if head_url}}{{basePath}}/{{head_url}}{{else}}images/head2.jpg{{/if}}" alt="" />
+        </div>
+        {{if headwear_url}}
+        <div class="headHat">
+            <img src="{{headwear_url}}" alt="" />
+        </div>
+        {{/if}}
+        <div class="bg"></div>
+    </div>
+    <!--<div class="name">{{name}}</div>-->
+    <div class="name"><button type="button" class="btn-personal-info">个人资料</button></div>
+</script>
+<!--信息确认-->
+<script type="text/html" id="tpl-message">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+        <div class="btn-box">
+            {{if button}}
+            <button type="button" class="btn-okay {{button}}"></button>
+            {{/if}}
+        </div>
+    </div>
+</script>
+<!--确定兑换礼品确认框-->
+<script type="text/html" id="tpl-storeConfirm">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+        <input type="number" class="gift-div" id="giftNum" />
+        <div id="youNeedNum" class="content"></div>
+        <div class="btn-box">
+            <button type="button" class="btn-okay store-confirm" id="storeConfirmBtn" data-id=""></button>
+        </div>
+    </div>
+</script>
+<!--兑换礼品失败-->
+<script type="text/html" id="tpl-giftFailed">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+    </div>
+</script>
+<!--信息2 自动退出-->
+<script type="text/html" id="tpl-message2">
+    <div class="icon-img"><img src="images/right.png" alt="" /></div>
+    <div class="text-info">
+        {{if msg}}<h2>{{msg}}</h2>{{/if}}
+        {{if intro}}<p>{{intro}}</p>{{/if}}
+    </div>
+</script>
+<script type="text/javascript" src="js/pages/personal.js"></script>
+</body>
+</html>

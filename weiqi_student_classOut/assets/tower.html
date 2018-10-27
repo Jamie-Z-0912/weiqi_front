@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9,IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8">
+    <title>修炼塔 学员课后系统</title>
+</head>
+<body>
+<div class="tower-menu">
+    <!--修炼塔-->
+    <div class="tower-list">
+        <!--修炼塔列表-->
+        <ul id="towerList">
+        </ul>
+        <!--返回首页按钮-->
+        <div class="back-box-home">
+            <button class="back-home-btn" id="backHome"></button>
+        </div>
+    </div>
+    <!--关卡-->
+    <div class="barrier-list" style="display: none;">
+        <!--关卡列表-->
+        <div class="barrier-nav" id="barrierList">
+        </div>
+        <!--关卡数据-->
+        <div class="barrier-data" id="barrierData">
+        </div>
+        <!--操作-->
+        <div class="barrier-operate">
+            <!--返回修炼塔按钮-->
+            <div class="back-box-tower">
+                <button class="back-tower-btn" id="backTower"></button>
+            </div>
+            <div class="barrier-prev-next">
+                    <button type="button" class="btn-barrier btn-barrierPrev" id="btnBarrierPagePrev"></button>
+                <button type="button" class="btn-barrier btn-barrierNext" id="btnBarrierPageNext"></button>
+            </div>
+        </div>
+    </div>
+    <!--题目-->
+    <div class="question-list"  style="display: none;">
+        <!--题目-->
+        <div class="question-main">
+            <div class="question-inner-box" id="mainWrap">
+                <!--<button type="button" class="btn-scale-chess"></button>-->
+                <div class="question-chess">
+                    <!-- 问题和棋子选择 -->
+                    <div class="left-box" id="chessOperate">
+                    </div>
+                    <!-- 棋盘 -->
+                    <div class="chess-board" id="chessBoardWrap">
+                        <div class="board-box" id="boardBox"></div>
+                    </div>
+                    <!--消耗卡-->
+                    <div class="right-box" id="cardList">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--返回关卡按钮-->
+        <div class="back-box-barrier">
+            <button class="back-barrier-btn" id="backBarrier"></button>
+        </div>
+        <!--闯关成功-->
+        <div class="gate-model" style="display: none;" id="gateModel">
+            <audio class="audio-success" id="audioSuccess">
+                <source src="./media/pass.mp3" type="audio/mpeg">
+            </audio>
+            <video class="video-success" id="videoSuccess">
+                <source src="./media/pass.mp4" type="video/mp4" />
+            </video>
+        </div>
+    </div>
+</div>
+
+<!-- ******************************************* 页面内容 *******************************************-->
+<!-- 修炼塔列表 -->
+<script type="text/html" id="tpl-tower-list">
+    {{each resultList as value}}
+        <li data-towerid={{value.id}}>
+            <a href="javascript:;">
+                {{if value.progress <= 50 && value.progress >= 0}}
+                    <img src="./images/tower/tower1.png" />
+                {{else if value.progress > 50 && value.progress < 100}}
+                    <img src="./images/tower/tower2.png" />
+                {{else}}
+                    <img src="./images/tower/tower3.png" />
+                {{/if}}
+                <span class="tower-name">{{value.name}}</span>
+            </a>
+        </li>
+    {{/each}}
+</script>
+<!-- 关卡列表 -->
+<script type="text/html" id="tpl-barrierList">
+    {{each resultList as value}}
+    <div class="barrier-item" data-id="{{value.id}}" data-result="{{value.result}}" data-status="{{value.status}}">
+        <a href="javascript:;">
+            <span class="item-num">{{value.id}}</span>
+            {{if value.status == 0}}
+            <img src="./images/barrier/lock.png" alt="">
+            {{else if value.status != 0 && value.result == 0}}
+            <img src="./images/barrier/star0.png" alt="">
+            {{else if value.status != 0 && value.result == 1}}
+            <img src="./images/barrier/star1.png" alt="">
+            {{else if value.status != 0 && value.result == 2}}
+            <img src="./images/barrier/star2.png" alt="">
+            {{else if value.status != 0 && value.result == 3}}
+            <img src="./images/barrier/star3.png" alt="">
+            {{/if}}
+        </a>
+    </div>
+    {{/each}}
+</script>
+<!-- 关卡数据 -->
+<script type="text/html" id="tpl-barrierData">
+    <div class="barrier-num">第{{cur_gate}}/{{total_gate}}关</div>
+    <div class="barrier-question-num">当前关卡共{{total_num}}题</div>
+</script>
+<!-- 棋子操作和题目主题 -->
+<script type="text/html" id="tpl-chessOperate">
+    <div class="question">
+        {{stem}}
+    </div>
+    <div class="operate homework-chess">
+        <!--record-operate 记录操作-->
+        <div class="record-operate" id="recordOperate"></div>
+        <!--pieces-operate 棋子-->
+        <div class="pieces-operate" id="piecesOperate"></div>
+        <button type="button" class="btn-update-chess" id="submitChess" data-questionid="{{id}}" data-towerid="{{tower_id}}"></button>
+    </div>
+</script>
+<!-- 道具卡列表 -->
+<script type="text/html" id="tpl-cardList">
+    {{each resultList as value}}
+    <div class="card-nav">
+        <a href="javascript:;" class="card-use" data-id="{{value.id}}" data-num="{{value.num}}" data-name="{{value.name}}">
+            <img src="{{value.pic_url}}" alt="{{value.name}}">
+            <div>{{value.name}}</div>
+            <div>X {{value.num}}</div>
+        </a>
+    </div>
+    {{/each}}
+</script>
+
+<!-- ******************************************* 提示弹框 *******************************************-->
+<script type="text/html" id="tpl-tipMessage">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+    </div>
+</script>
+<!-- 进入修炼塔失败 -->
+<script type="text/html" id="tpl-goToBarrierDefeat">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+    </div>
+</script>
+<!-- 关卡翻页失败 -->
+<script type="text/html" id="tpl-barrierPageDefeat">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+    </div>
+</script>
+<!-- 关卡进入失败 -->
+<script type="text/html" id="tpl-barrierIntoDefeat">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+    </div>
+</script>
+<!-- 使用消耗卡 -->
+<script type="text/html" id="tpl-useCard">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+        <div class="btn-box">
+            <button type="button" class="btn-okay " id="useThisCard" data-cardid="{{=cardid}}"></button>
+            <button type="button" class="btn-cancel message-cancle"></button>
+        </div>
+    </div>
+</script>
+<!-- 退出答题 -->
+<script type="text/html" id="tpl-exitQuestion">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+        <div class="btn-box">
+            <button type="button" class="btn-okay" id="exitQuestionOk"></button>
+            <button type="button" class="btn-cancel message-cancle"></button>
+        </div>
+    </div>
+</script>
+<!--闯关成功提示-->
+<script type="text/html" id="tpl-barrierSuccess">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+        <div class="content-score">{{=score}}积分</div>
+    </div>
+</script>
+<!--闯关失败提示-->
+<script type="text/html" id="tpl-barrierFailed">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+    </div>
+</script>
+<script type="text/javascript" src="js/pages/tower.js"></script>
+</body>
+</html>

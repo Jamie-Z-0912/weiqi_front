@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9,IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8">
+    <title>个人资料 学员端课后系统</title>
+</head>
+<body>
+<!--personal-info-wrapper-->
+<div class="personal-info-wrapper">
+    <div id="infoList"></div>
+    <button type="button" class="btn-back"></button>
+</div>
+<!--/personal-info-wrapper-->
+<script type="text/html" id="tpl-user">
+    <!--head-wrap-->
+    <button type="button" class="head-wrap">
+        <div class="photo">
+            <div class="circle">
+                <img src="{{if head_url}}{{basePath}}/{{head_url}}{{else}}images/head2.jpg{{/if}}" alt="" />
+            </div>
+            {{if headwear_url}}
+            <div class="headHat">
+                <img src="{{headwear_url}}" alt="" />
+            </div>
+            {{/if}}
+            <div class="bg"></div>
+        </div>
+        <div class="name">{{name}}</div>
+    </button>
+    <!--/head-wrap-->
+    <!--list-->
+    <ul class="list">
+        <li>
+            <dl>
+                <dt>性别</dt>
+                <dd>{{gender sex}}</dd>
+            </dl>
+        </li>
+        <li>
+            <dl>
+                <dt>上课时间</dt>
+                <dd><button type="button" data-cid=".timeList" class="btn-tran"></button></dd>
+            </dl>
+            <div class="subItem timeList">
+                <dl>
+                    <dt>上午</dt>
+                    <dd>
+                        {{each timeLimit.am as value}}
+                        <p>{{value}}</p>
+                        {{/each}}
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>下午</dt>
+                    <dd>
+                        {{each timeLimit.pm as value}}
+                        <p>{{value}}</p>
+                        {{/each}}
+                    </dd>
+                </dl>
+            </div>
+        </li>
+        <li>
+            <dl>
+                <dt>围棋水平</dt>
+                <dd>{{memberLevel now_level}}</dd>
+            </dl>
+        </li>
+        <li>
+            <dl>
+                <dt>生日</dt>
+                <dd>{{formatDate birthday}}</dd>
+            </dl>
+        </li>
+        <li>
+            <dl>
+                <dt>任课老师</dt>
+                <dd><button type="button" data-cid=".teacherList" class="btn-tran"></button></dd>
+            </dl>
+            {{if tList}}
+            <div class="subItem teacherList">
+                <ul class="list">
+                    {{each tList as value}}
+                    <li>{{value}}</li>
+                    {{/each}}
+                </ul>
+            </div>
+            {{/if}}
+        </li>
+        <li>
+            <dl>
+                <dt>课时数</dt>
+                <dd><button type="button" data-cid=".timeInfo" class="btn-tran"></button></dd>
+            </dl>
+            <div class="subItem timeInfo">
+                <dl>
+                    <dt>总课时</dt>
+                    <dd>{{total_class}}</dd>
+                </dl>
+                <dl>
+                    <dt>有效课时</dt>
+                    <dd>{{valid_class}}</dd>
+                </dl>
+            </div>
+        </li>
+       <!-- <li>
+            <dl>
+                <dt>比赛成绩</dt>
+                <dd></dd>
+            </dl>
+        </li>-->
+    </ul>
+    <!--/list-->
+</script>
+
+<script type="text/javascript" src="js/pages/personalInfo.js"></script>
+</body>
+</html>

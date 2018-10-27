@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9,IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8">
+    <title>修改头像 学员端课后系统</title>
+</head>
+<body>
+<!--headUrl-wrapper-->
+<div class="headUrl-wrapper">
+    <ul class="list" id="headList"></ul>
+    <div class="btm-button">
+        <button type="button" class="btn-back"></button>
+        <button type="button" class="btn-selectHead"></button>
+    </div>
+</div>
+<!--/headUrl-wrapper-->
+
+<script type="text/html" id="tpl-list">
+    {{each resultList as value}}
+<li>
+    <button type="button" class="photo" data-url="{{value.url}}"><img src="{{basePath}}{{value.url}}"></button>
+</li>
+    {{/each}}
+</script>
+
+<!--信息确认-->
+<script type="text/html" id="tpl-message">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+        <div class="btn-box">
+            {{if button}}
+            <button type="button" class="btn-okay {{button}}"></button>
+            {{/if}}
+        </div>
+    </div>
+</script>
+
+<script type="text/javascript" src="js/pages/editHeadUrl.js"></script>
+</body>
+</html>

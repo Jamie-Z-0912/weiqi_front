@@ -1,0 +1,33 @@
+/*
+ * 变量定义
+ */
+$screenWidth : 100%;
+$screenHeight : 100%;
+
+$baseFamily : "方正兰亭圆简体", "Microsoft Yahei", sans-serif;        //默认 字体
+
+$fontFamilyFZJTD : "方正兰亭圆简体_大", "Microsoft Yahei", sans-serif;
+$fontFamilyFZJTC : "方正兰亭圆简体_粗", "Microsoft Yahei", sans-serif;
+
+$baseFontSize : 12px;                               //默认 字体大小
+$baseFontColor : #333;                              //默认 字体颜色
+
+//颜色
+$colorBlack : #000;
+$colorLitBlack : #333;
+$colorLotBlack : #666;
+$colorGray : #999;
+$colorYellow: #fee465;
+$colorWhite: #fff;
+$textBorder : #28241b;
+$textUnDo : #a12222;
+$textDid : #045D12;
+
+//media
+$media1024 : 1024px;
+$media980 : 980px;
+$media768 : 768px;
+$media420 : 420px;
+
+@mixin cleanPM{ margin: 0; padding: 0; }
+@mixin autoMid{ margin: 0 auto; display: block; }

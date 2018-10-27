@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9,IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8">
+    <title>学员端课后系统</title>
+</head>
+<body class="lg">
+<!--login-wrapper-->
+<div class="login-wrapper" id="loginWrapper">
+    <!--lg-wrap-->
+    <div class="lg-wrap">
+        <form action="#" method="post" id="loginForm">
+            <div class="ipt-txt"><input type="text" name="mobile" value="" placeholder="输入用户名" /></div>
+            <div class="ipt-txt"><input type="password" name="password" value="" placeholder="输入用密码" /></div>
+            <button type="button" class="btn-lg" id="btnSubmit"><span>登录</span></button>
+        </form>
+        <div class="btm-box">
+            <a href="javascript:;" class="btn-change" id="btnChange">修改密码</a>
+            <a href="javascript:;" class="btn-forget" id="btnForget">忘记密码</a>
+        </div>
+    </div>
+    <!--/lg-wrap-->
+</div>
+<!--/login-wrapper-->
+
+<script type="text/html" id="tpl-telPhone">
+    <div class="cell tel-tit">
+        <img src="images/login/contact.png" alt="" />
+    </div>
+    <div class="cell tel-phone">
+        <img src="images/login/tel2.png" alt="" />
+    </div>
+</script>
+<script type="text/html" id="tpl-message">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+        <div class="btn-box">
+            <button type="button" class="btn-okay btn-message-okay"></button>
+        </div>
+    </div>
+</script>
+
+<script type="text/javascript" src="js/pages/login.js"></script>
+</body>
+</html>

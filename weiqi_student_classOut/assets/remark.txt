@@ -1,0 +1,10 @@
+index.html                      登录页
+
+classIn.html                    学生端课堂系统
+editPwd.html                    修改密码
+editHeadUrl.html                修改头像
+personal.html                   个人中心
+personalInfo.html               个人资料
+
+classAfter.html                 课后学习
+

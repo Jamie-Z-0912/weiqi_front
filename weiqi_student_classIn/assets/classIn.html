@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9,IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8">
+    <title>课堂版 学员端课堂系统</title>
+</head>
+<body>
+<!--classIn-menu-->
+<div class="classIn-menu">
+    <button type="button" class="head-wrap" id="headWrap"></button>
+    <ul class="list" id="navList">
+        <li data-id="1"><a href="javascript:;" data-text="在线学习">在线学习</a><span class="icon icon-01"></span></li>
+        <li data-id="2"><a href="javascript:;" data-text="课堂作业">课堂作业</a><span class="icon icon-02"></span></li>
+        <li data-id="3"><a href="javascript:;" data-text="个人中心">个人中心</a><span class="icon icon-03"></span></li>
+    </ul>
+    <button type="button" class="btn-back" id="historyBack"></button>
+</div>
+<!--/classIn-menu-->
+<!--头像信息-->
+<script type="text/html" id="tpl-user">
+    <div class="photo">
+        <div class="circle">
+            <img src="{{if head_url}}{{basePath}}/{{head_url}}{{else}}images/head2.jpg{{/if}}" alt="" />
+        </div>
+        {{if headwear_url}}
+        <div class="headHat">
+            <img src="{{headwear_url}}" alt="" />
+        </div>
+        {{/if}}
+        <div class="bg"></div>
+    </div>
+    <div class="name">{{name}}</div>
+</script>
+<!--信息确认-->
+<script type="text/html" id="tpl-message">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+        <div class="btn-box">
+            {{if button}}
+            <button type="button" class="btn-okay {{button}}"></button>
+            {{/if}}
+        </div>
+    </div>
+</script>
+
+<script type="text/javascript" src="js/pages/classIn.js"></script>
+</body>
+</html>

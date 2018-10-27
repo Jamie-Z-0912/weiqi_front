@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9,IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8">
+    <title>在线学习 学员课堂系统</title>
+</head>
+<body>
+<!--teacher-menu-->
+<div class="teacher-menu classroom-wrapper" id="classroomWrap">
+    <!--left-list-wrap-->
+    <div class="left-list-wrap" id="leftMenuWrap">
+        <div class="slt-list">
+            <select name="className" id="sltClass" class="slt-class">
+                <option value="">班级</option>
+            </select>
+            <select name="classTime" id="classTime" class="slt-time">
+                <option value="">课次</option>
+            </select>
+            <select name="classHour" id="classHour" class="slt-hour">
+                <option value="">课时</option>
+            </select>
+        </div>
+        <div class="btn-box">
+            <button type="button" class="btn-classNext btn-circle" style="margin-top:.76rem;" id="btnClassNext"></button>
+            <!--<button type="button" class="btn-classMenu btn-circle btn-class-menu"></button>-->
+            <!--<button type="button" class="btn-classHelp btn-circle btn-class-help"></button>-->
+        </div>
+        <div class="back-box"><button type="button" class="btn-history" id="btnHistory"></button></div>
+        <div class="shrink"><button type="button" id="shrinkMainMenu"></button></div>
+    </div>
+    <!--/left-list-wrap-->
+    <!--class-operate-->
+    <div class="class-operate" id="classOperate">
+        <button type="button" class="btn-back btn-class-back"></button>
+        <button type="button" class="btn-classPage btn-classPrev" id="btnClassPagePrev"></button>
+        <button type="button" class="btn-classPage btn-classNext" id="btnClassPageNext"></button>
+    </div>
+    <!--/class-operate-->
+    <!--right-list-wrap-->
+    <div class="right-list-wrap" id="rightListWrap">
+        <div class="inner" id="rightListInner"></div>
+        <div class="shrink"><button type="button" id="shrinkSecondMenu"></button></div>
+    </div>
+    <!--/right-list-wrap-->
+</div>
+<!--/teacher-menu-->
+<!--main-wrapper-->
+<div class="main-wrapper">
+    <div class="inner-box" id="mainWrap"></div>
+</div>
+<!--/main-wrapper-->
+<!--set-score-wrapper-->
+<div class="set-score-wrapper" id="scoreWrapper">
+    <div class="score-content">
+        <ul class="list">
+            <li><button type="button"></button></li>
+            <li><button type="button"></button></li>
+            <li><button type="button"></button></li>
+            <li><button type="button"></button></li>
+            <li><button type="button"></button></li>
+        </ul>
+        <div class="btn-box">
+            <button type="button" class="btn-star-okay"></button>
+        </div>
+    </div>
+    <div class="watermark"></div>
+</div>
+<!--/set-score-wrapper-->
+
+
+<!-- * * * * * * * * * * * * * * artTemplate model * * * * * * * * * * * * * * -->
+<!--课件资源列表容器-->
+<script type="text/html" id="tpl-resource">
+    <div class="resource-list-box">
+        <ul class="resource-list">
+            {{each resultList as value}}
+            <li>
+                <button type="button" class="btn-res-item"
+                        data-id="{{value.id}}"
+                        data-resid="{{value.res_id}}"
+                        data-answer="{{value.answer}}"
+                        data-mode="{{value.mode}}"
+                        data-type="{{value.continue_type}}"
+                        data-url="{{value.url}}"
+                        data-content='{{value.content}}'
+                        data-stem="{{value.stem}}"
+                ><span>{{value.stem}}</span></button>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+</script>
+<!--1.视频模板-->
+<script type="text/html" id="tpl-videoPanel">
+    <div class="board-video-box" id="boardVideoBox">
+        <div class="zy_media" style="display: none">
+            <video preload="auto" class="video-js vjs-default-skin" controls preload="none" autobuffer playsinline webkit-playsinline>
+                <source type="video/mp4" src="{{url}}" />
+                您的浏览器不支持HTML5视频
+            </video>
+        </div>
+    </div>
+</script>
+<!--2.讲解例题-->
+<script type="text/html" id="tpl-explainPanel">
+    <button type="button" class="btn-scale-chess"></button>
+    <div class="chess-board-wrap">
+        <!--left-->
+        <div class="left-box noSign">
+            <div class="question">
+                {{stem}}
+            </div>
+            <div class="operate">
+                <!--record-operate 记录操作-->
+                <div class="record-operate" id="recordOperate"></div>
+                <!--pieces-operate 棋子-->
+                <div class="pieces-operate" id="piecesOperate"></div>
+                <!--sign-operate 标记-->
+                <!--<div class="sign-operate" id="signOperate"></div>-->
+            </div>
+        </div>
+        <!--/left-->
+        <!--chess-board-->
+        <div class="chess-board" id="chessBoardWrap">
+            <div class="board-box" id="boardBox"></div>
+        </div>
+        <!--/chess-board-->
+    </div>
+</script>
+<!--3.知识类提问-->
+<script type="text/html" id="tpl-Knowledge">
+    <div class="board-explain-box">
+        <!--question-->
+        <div class="question">
+            <h2>题目：</h2>
+            <div class="content">{{stem}}</div>
+        </div>
+        <!--/question-->
+        <!--answer-->
+        <div class="answer">
+            <h2>答案：</h2>
+            <div class="content">{{answer}}</div>
+        </div>
+        <!--/answer-->
+        <button type="button" class="btn-explain-answer"></button>
+    </div>
+</script>
+
+<!--班级-->
+<script type="text/html" id="tpl-classList">
+    <option value="">班级</option>
+    {{each resultList as value}}
+    <option value="{{value.id}}" data-room="{{value.classroom}}">{{value.name}}</option>
+    {{/each}}
+</script>
+<!--课次-->
+<script type="text/html" id="tpl-classTimeList">
+    <option value="">课次</option>
+    {{each resultList as value}}
+    <option value="{{value.course_time}}">{{value.course_time_name}}</option>
+    {{/each}}
+</script>
+<!--课时-->
+<script type="text/html" id="tpl-classHourList">
+    <option value="">课时</option>
+    {{each resultList as value}}
+    <option value="{{value.course_hour}}" data-rId="{{value.res_id}}" data-time="{{value.time}}">{{value.course_hour_name}}</option>
+    {{/each}}
+</script>
+
+<!--学员信息列表容器-->
+<script type="text/html" id="tpl-studentList">
+    <div class="list-box-wrap">
+        <!--list-box-->
+        <div class="list-box" id="memberList"></div>
+        <!--/list-box-->
+    </div>
+    <div class="btn-box">
+        <button type="button" class="btn-addMember btn-list-add"></button>
+    </div>
+</script>
+<!--学员信息-->
+<script type="text/html" id="tpl-student">
+    {{each resultList as value}}
+    <div class="item-list">
+        <div class="cell ckb">
+            <label class="checkbox">
+                <input type="checkbox" value="{{value.id}}" data-name="{{value.name}}" {{if value.status == 1 || value.status == 3}}checked disabled{{/if}} />
+                <i class="circle"></i>
+            </label>
+        </div>
+        <div class="cell info">
+            <h3 class="md-none">{{value.name}}</h3>
+        </div>
+        <div class="cell q-box">
+            <button type="button" class="btn-question" data-id="{{value.id}}"></button>
+        </div>
+        <div class="cell score">{{value.score}}</div>
+    </div>
+    {{/each}}
+</script>
+<!--是否确认退出-->
+<script type="text/html" id="tpl-isExit">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+        <div class="btn-box">
+            <button type="button" class="btn-okay btn-exit-okay"></button>
+        </div>
+    </div>
+</script>
+<!--是否签到-->
+<script type="text/html" id="tpl-isChecked">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+        <div class="btn-box">
+            <button type="button" class="btn-okay btn-checked-okay"></button>
+        </div>
+    </div>
+</script>
+<!--信息确认-->
+<script type="text/html" id="tpl-alert">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+        <div class="btn-box">
+            <button type="button" class="btn-okay btn-alert-okay"></button>
+        </div>
+    </div>
+</script>
+<script type="text/javascript" src="js/pages/classroom.js"></script>
+</body>
+</html>
