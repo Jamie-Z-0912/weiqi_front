@@ -5,7 +5,8 @@
         _cookie = $Request.getCookies(),
         _message = new $Request.dialog({            //提示信息弹框
             animateName: 'messageScale'
-        });
+        }),
+      lastQid = 0;
 
     //加载资源数据
     function loadResourceList(){
@@ -26,6 +27,7 @@
                 if('undefined' !== typeof data['resultList'] && $.isArray(data['resultList'])){
                     _chessOperate.pageSize = data['resultList'].length;
                     _loading.hideIt();      //隐藏加载框
+									qn = data.resultList[_chessOperate.pageSize-1].id;
                 }
                 _chessOperate.pageIndex = -1;
                 _chessOperate.prevIndex = -1;
