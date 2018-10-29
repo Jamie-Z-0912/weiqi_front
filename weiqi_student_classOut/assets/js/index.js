@@ -1,5 +1,5 @@
 /*jshint esversion: 6*/
-import SVG from 'svg.js';
+// import SVG from 'svg.js';
 import $ from 'jquery';
 import Routers from './lib/api';
 import PageLinks from './lib/aPage';
