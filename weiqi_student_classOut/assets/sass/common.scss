@@ -834,7 +834,15 @@ div.main-wrapper{ width: 100%; height: 100%; padding: .2rem .2rem .2rem .8rem; p
     &.active{ background-image: url("../images/btn_shake.png"); }
   }
 }
-
+div.tower-help{
+  position: fixed;
+  right: .2rem;
+  top: .2rem;
+  z-index: 999;
+  width: .32rem;
+  height: .32rem;
+  img{display: block; width: 100%;}
+}
 // ---------------------------------------------------- 修炼塔tower.html -----------------------------------------------------------------------
 div.tower-menu{ width: 100%;height: 100%;position:relative;
   // 修炼塔

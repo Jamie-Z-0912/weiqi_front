@@ -33,6 +33,11 @@
                 message : '如果未答完题目，退出将丢失战绩，确定退出吗？'
             })).showIt();
         });
+        $('#towerHelp').on('click', function () {
+					_message.setContent(template('tpl-barrierIntoDefeat', {
+						message : '将修炼塔中所有关卡解锁即可获得奖杯，每个修炼塔都有一个奖杯哦~~<br/>赶快参与闯关吧！'
+					})).showIt();
+				});
         //确定返回关卡
         $(document).on('click','button#exitQuestionOk', function(){
             $Request.getInfo($Request.getRouter('quitGate'), {
