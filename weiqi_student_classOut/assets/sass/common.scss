@@ -926,6 +926,9 @@ div.tower-menu{ width: 100%;height: 100%;position:relative;
     //闯关结果弹窗
     .gate-model{ position: fixed;width: 100%;height: 100%;top:0;left: 0;background-color: rgba(0,0,0,.6);z-index: 999;
       .audio-success{overflow: hidden;pointer-events: none;}
+      .gif-box{
+        img{display: block;max-width: 8.6rem; margin: auto;}
+      }
       .video-success{width:100%;height: 100%;pointer-events: none;background-color: rgba(0,0,0,0);}
     }
   }

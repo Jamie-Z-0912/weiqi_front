@@ -122,6 +122,7 @@
                 var _result = data.resultList;
                 // status为0,表示答题未完成，还有下一题。为1表示答题完成
                 if (_result.status == 0){
+									document.getElementById("mSuccess").play();
                     $("#chessOperate").html(template('tpl-chessOperate', _result['next']));
                     WQ_Object.setOriginPiece(_result["next"]['content']);
                     drawChessBoard(_result["next"]['content']);
@@ -129,10 +130,11 @@
                     $("button#submitChess").hide();
                     if (_result.result == 0){
                         // 闯关之前默认的弹框
+											document.getElementById("mError").play();
                         _message.setContent(template('tpl-barrierFailed', {
                             message : '很遗憾，闯关失败！'
                         })).showIt();
-                        setTimeout(function(){
+											setTimeout(function(){
                             $(".question-list").hide();
                             $(".barrier-list").show();
                             getBarrierData(_towerId);
@@ -163,13 +165,10 @@
                         //    getBarrierData(_towerId);
                         //    _message.hideIt();
                         //},3000);
-
+	
+											document.getElementById("mNext").play();
                         //闯关有音效和视频
-                        var as = document.getElementById('audioSuccess'),
-                          vs = document.getElementById('videoSuccess');
                         $("#gateModel").show();
-                        as.play();
-                        vs.play();
                         setTimeout(function(){
                             $(".question-list").hide();
                             $(".barrier-list").show();
