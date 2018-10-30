@@ -127,7 +127,18 @@
                 var _result = data.resultList;
                 // status为0,表示答题未完成，还有下一题。为1表示答题完成
                 if (_result.status == 0){
-									document.getElementById("mSuccess").play();
+                    console.log(_result);
+                    $('#gifSuccess').show();
+                    if(_result.answer){
+											// _message.setContent(template('tpl-barrierFailed', {
+											// 	message : '回答正确'
+											// })).showIt();
+											document.getElementById("mSuccess").play();
+											
+                    }else{
+											document.getElementById("mError").play();
+											
+                    }
                     $("#chessOperate").html(template('tpl-chessOperate', _result['next']));
                     WQ_Object.setOriginPiece(_result["next"]['content']);
                     drawChessBoard(_result["next"]['content']);
@@ -135,7 +146,6 @@
                     $("button#submitChess").hide();
                     if (_result.result == 0){
                         // 闯关之前默认的弹框
-											document.getElementById("mError").play();
                         _message.setContent(template('tpl-barrierFailed', {
                             message : '很遗憾，闯关失败！'
                         })).showIt();
