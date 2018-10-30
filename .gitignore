@@ -1,3 +1,5 @@
 .idea
 weiqi_student_classOut/build
 weiqi_student_classOut/node_modules
+weiqi_student_classIn/build
+weiqi_student_classIn/node_modules

@@ -1,4 +1,4 @@
-const domain = 'https://xqn.njlime.com/';
+const domain = 'https://item.njlime.com/';
 const path = 'demo/';
 const Routers = {
     data : {

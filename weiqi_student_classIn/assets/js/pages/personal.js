@@ -42,12 +42,47 @@
         });
         return _time;
     }
+	//学员级别
+	template.helper('memberLevel', function(val){
+		val = val && parseInt(val) || 0;
+		if(1 == val){
+			return '入门';
+		}else if(2 == val){
+			return '初级';
+		}else if(3 == val){
+			return '专业1';
+		}else if(4 == val){
+			return '专业2';
+		}else if(5 == val){
+			return '专业3';
+		}
+		return '未知';
+	});
 
+//性别
+	template.helper('gender', function(val){
+		val = val && parseInt(val) || 0;
+		if(0 == val){
+			return '女';
+		}else if(1 == val){
+			return '男';
+		}else{
+			return '未知';
+		}
+	});
+
+//日期转换
+	template.helper('formatDate', function(val){
+		return (function(_date){
+			return _date.getFullYear() + '-' + (_date.getMonth() + 1) + '-' + _date.getDate();
+		})(new Date(val));
+	});
     //加载用户信息
     function loadUserInfo(){
         $Request.getInfo($Request.getRouter('studentInfo'), {}, function(data){
             _loading.hideIt();      //隐藏加载框
-
+            
+          console.log('data',data);
             var _result = data['resultList'],       //数据集
                 _teacherList,
                 _timeList,
@@ -68,7 +103,7 @@
                         _result['tList'] = _teacherList;
                     }
                     _result['timeLimit'] = _timeObj;
-
+                    console.log('result',_result);
                     $('#infoList').html(template('tpl-user', _result));
                 }
             }else{
