@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9,IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8">
+    <title>布置作业 教师端课堂系统</title>
+</head>
+<body>
+<!--assign-menu-->
+<div class="assign-menu" id="assignWrap">
+    <!--left-list-wrap-->
+    <div class="left-list-wrap">
+        <div class="slt-list">
+            <select name="className" id="sltClass" class="slt-class">
+                <option value="">班级</option>
+            </select>
+            <select name="classTime" id="classTime" class="slt-time">
+                <option value="">课次</option>
+            </select>
+            <select name="classHour" id="classHour" class="slt-hour">
+                <option value="">课时</option>
+            </select>
+        </div>
+        <div class="back-box"><button type="button" class="btn-history" id="btnHistory"></button></div>
+    </div>
+    <!--/left-list-wrap-->
+    <!--center-list-wrap-->
+    <div class="center-list-wrap">
+        <div class="inner" id="centerListInner"></div>
+        <div class="shrink"><button type="button" id="shrinkMainMenu"></button></div>
+    </div>
+    <!--/center-list-wrap-->
+    <!--right-list-wrap-->
+    <div class="right-list-wrap">
+        <div class="inner" id="rightListInner">
+            <div class="list-box-wrap">
+                <!--list-box-->
+                <div class="list-box" id="memberList">
+                </div>
+                <!--/list-box-->
+                <!--checkAll-->
+                <div class="check-all" id="checkAll">
+                    <div class="item-list">
+                        <div class="cell ckb">
+                            <label class="checkbox">
+                                <input type="checkbox" value="15" data-name="全选" id="checkkAllckb">
+                                <i class="circle"></i>
+                            </label>
+                        </div>
+                        <div class="cell info">
+                            <h3 class="md-none">全选</h3>
+                        </div>
+                        <button type="button" class="btn-send" id="btnSend"></button>
+                    </div>
+                </div>
+                <!--/checkAll-->
+            </div>
+        </div>
+        <div class="shrink"><button type="button" id="shrinkSecondMenu"></button></div>
+    </div>
+    <!--/right-list-wrap-->
+</div>
+<!--/assign-menu-->
+
+<!--班级-->
+<script type="text/html" id="tpl-classList">
+    <option value="">班级</option>
+    {{each resultList as value}}
+    <option value="{{value.id}}" data-room="{{value.classroom}}">{{value.name}}</option>
+    {{/each}}
+</script>
+<!--课次-->
+<script type="text/html" id="tpl-classTimeList">
+    <option value="">课次</option>
+    {{each resultList as value}}
+    <option value="{{value.course_time}}">{{value.course_time_name}}</option>
+    {{/each}}
+</script>
+<!--课时-->
+<script type="text/html" id="tpl-classHourList">
+    <option value="">课时</option>
+    {{each resultList as value}}
+    <option value="{{value.course_hour}}" data-rId="{{value.res_id}}" data-time="{{value.time}}">{{value.course_hour_name}}</option>
+    {{/each}}
+</script>
+<!--课件资源列表容器-->
+<script type="text/html" id="tpl-resource">
+    <div class="resource-list-box">
+        <ul class="resource-list">
+            {{each resultList as value}}
+            <li>
+                <button type="button" class="btn-res-item"
+                        data-id="{{value.id}}"
+                        data-resid="{{value.res_id}}"
+                        data-answer="{{value.answer}}"
+                        data-mode="{{value.mode}}"
+                        data-type="{{value.continue_type}}"
+                        data-url="{{value.url}}"
+                        data-content='{{value.content}}'
+                        data-stem="{{value.stem}}"
+                ><span>{{value.stem}}</span></button>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+</script>
+<!--信息确认-->
+<script type="text/html" id="tpl-alert">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+        <div class="btn-box">
+            <button type="button" class="btn-okay btn-alert-okay"></button>
+        </div>
+    </div>
+</script>
+<!--学员信息列表容器-->
+<script type="text/html" id="tpl-studentList">
+    {{each resultList as value}}
+    <div class="item-list" data-studentid="{{value.id}}">
+        <div class="cell ckb">
+            <label class="checkbox">
+                <input type="checkbox" value="{{value.id}}" name="students" data-name="{{=value.name}}">
+                <i class="circle"></i>
+            </label>
+        </div>
+        <div class="cell info">
+            <h3 class="md-none">{{value.name}}</h3>
+        </div>
+        {{if value.status == 0}}
+            <div class="cell status unalready">未布置</div>
+        {{else if value.status == 1}}
+            <div class="cell status already">已布置</div>
+        {{else if value.status == 2}}
+            <div class="cell status unalready">已提交</div>
+        {{else}}
+            <div class="cell status unalready">已批改</div>
+        {{/if}}
+    </div>
+    {{/each}}
+</script>
+<!--发送成功-->
+<script type="text/html" id="tpl-send">
+    <div class="message-info">
+        <div class="btn-box">
+            <img src="{{image}}" alt="图片">
+        </div>
+        <div class="content">{{msg}}</div>
+    </div>
+</script>
+<script type="text/javascript" src="js/pages/assignWork.js"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9,IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8">
+    <title>课堂作业 - 学员端课堂系统</title>
+</head>
+<body>
+<!--left-menu-wrap-->
+<div class="left-menu-wrap">
+    <!--column-left-->
+    <div class="column-left showIt" id="firstMenu">
+        <div class="btn-hide" id="btnFirst"></div>
+        <div class="flex-box">
+            <div class="select-wrap">
+                <select class="my-select">
+                    <option value="1">小一班</option>
+                    <option value="2">小二班</option>
+                    <option value="3">小三班</option>
+                </select>
+                <select class="my-select">
+                    <option value="1">第七课</option>
+                    <option value="2">第八课</option>
+                    <option value="3">第九课</option>
+                </select>
+                <select class="my-select">
+                    <option value="1">课时1</option>
+                    <option value="2">课时2</option>
+                    <option value="3">课时3</option>
+                </select>
+            </div>
+
+            <ul class="btn-box">
+                <li><button type="button" class="play"></button></li>
+                <li><button type="button" class="menu btnMenuShow"></button></li>
+                <li><button type="button" class="help"></button></li>
+
+            </ul>
+            <div class="btn-back btnHistory"></div>
+        </div>
+    </div>
+    <!--/column-left-->
+    <!--column-right-->
+    <div class="column-right class-in" id="secondMenu">
+        <div class="btn-hide" id="btnSecond"></div>
+        <div class="flex-box" id="rightFlexBox">
+            <!--resource-list-->
+            <ul class="resource-list" id="resourceList">
+                <li>
+                    <button type="button" data-id="1" data-type="answer">题目1</button>
+                    <span class="status okay">已批改</span>
+                </li>
+                <li>
+                    <button type="button">题目2</button>
+                    <span class="status">未批改</span>
+                </li>
+                <li>
+                    <button type="button">题目3</button>
+                    <span class="status okay">已批改</span>
+                </li>
+                <li>
+                    <button type="button">题目4</button>
+                    <span class="status okay">已批改</span>
+                </li>
+                <li>
+                    <button type="button">题目5</button>
+                    <span class="status okay">已批改</span>
+                </li>
+            </ul>
+            <!--/resource-list-->
+        </div>
+    </div>
+    <!--/column-right-->
+    <!--play-wrap-->
+    <div class="play-wrap" id="playOpe">
+        <div class="btn-back btnHistory"></div>
+        <div class="btn-play play-left"></div>
+        <div class="btn-play play-right"></div>
+    </div>
+    <!--/play-wrap-->
+</div>
+<!--/left-menu-wrap-->
+
+<!--content-wrap-->
+<div class="content-wrap">
+    <!--answer-box-->
+    <div id="answerBox" class="answer-box">
+        <div class="content">
+            <!--ans-->
+            <div class="ans">
+                <h2>题目：</h2>
+                <div class="cont">
+                    <p>这是一道题目的题面,这是一道题目的题面,这是一道题目的题面,这是一道题目的题面?</p>
+                </div>
+            </div>
+            <!--/ans-->
+            <!--replay-->
+            <div class="replay">
+                <h2>答案：</h2>
+                <div class="cont">
+                    <p>这是一道题目的答案,这是一道题目的答案,这是一道题目的答案,这是一道题目的答案,这是一道题目的答案。</p>
+                </div>
+            </div>
+            <!--/replay-->
+        </div>
+        <div class="btn-box">
+            <button type="button" class="btn-none btn-right-answer">正确答案</button>
+        </div>
+    </div>
+    <!--/answer-box-->
+</div>
+<!--/content-wrap-->
+
+<script type="text/javascript" src="js/pages/classIn_work.js"></script>
+</body>
+</html>

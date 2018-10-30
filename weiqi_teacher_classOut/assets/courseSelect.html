@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9,IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8">
+    <title>排课查询 教师端课堂系统</title>
+</head>
+<body>
+<!--assign-menu-->
+<div class="course-menu">
+    <!--退出按钮-->
+    <div class="back-box"><button type="button" class="btn-history" id="btnHistory"></button></div>
+    <!--日历-->
+    <div class="title-wrap">
+        <div class="calendar">
+            <div class="vitual">
+                <span class="vitual-date vitual-end-date" id="appStartDate"></span>
+                <span>至</span>
+                <span class="vitual-date vitual-start-date" id="appEndDate"></span>
+            </div>
+            <!--<input class="class-date" type="text" readonly="readonly"  name="appDate">-->
+            <img class="calendar-icon" src="images/date-icon.png" alt="搜索">
+
+        </div>
+        <div class="class-select" id="classSelect">
+            <input class="class-name" type="text" id="className" placeholder="班级">
+            <img class="search-icon" src="images/search.png" alt="搜索" id="btnSearch">
+        </div>
+    </div>
+    <!--排课-->
+    <div class="main-wrap">
+        <div class="course-title">
+            <span>班级</span>
+            <span>课次</span>
+            <span>课时</span>
+            <span>教室</span>
+            <span>日期</span>
+            <span>时间</span>
+        </div>
+        <div class="course-list" id="courseList">
+        </div>
+    </div>
+    <!--日历-->
+    <div class="date-plugin" id="datePlugin"></div>
+</div>
+<!--课程列表容器-->
+<script type="text/html" id="tpl-courseList">
+    {{each resultList as value}}
+    <div class="course-nav">
+        <span>{{value.name}}</span>
+        <span>{{value.course_time}}</span>
+        <span>{{value.course_hour}}</span>
+        <span>{{value.classroom}}</span>
+        <span>{{value.class_date}}</span>
+        <span>{{value.class_time}}</span>
+    </div>
+    {{/each}}
+</script>
+<!--信息确认-->
+<script type="text/html" id="tpl-alert">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+        <div class="btn-box">
+            <button type="button" class="btn-okay btn-alert-okay"></button>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/javascript" src="js/pages/courseSelect.js"></script>
+<script type="text/javascript" src="js/plugin/calendar.js"></script>
+<script type="text/javascript" src="js/plugin/calendar-iscroll.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#appStartDate').date({
+            fromat: 'yyyy-mm-dd'
+        });
+        $('#appEndDate').date({
+            fromat: 'yyyy-mm-dd'
+        });
+    });
+</script>
+</body>
+</html>

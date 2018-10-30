@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9,IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8">
+    <title>在线学习 - 学员端课堂系统</title>
+</head>
+<body>
+<!--left-menu-wrap-->
+<div class="left-menu-wrap">
+    <!--column-left-->
+    <div class="column-left showIt" id="firstMenu">
+        <div class="btn-hide" id="btnFirst"></div>
+        <div class="flex-box">
+            <div class="select-wrap">
+                <select class="my-select">
+                    <option value="1">小一班</option>
+                    <option value="2">小二班</option>
+                    <option value="3">小三班</option>
+                </select>
+                <select class="my-select">
+                    <option value="1">第七课</option>
+                    <option value="2">第八课</option>
+                    <option value="3">第九课</option>
+                </select>
+                <select class="my-select">
+                    <option value="1">课时1</option>
+                    <option value="2">课时2</option>
+                    <option value="3">课时3</option>
+                </select>
+            </div>
+
+            <ul class="btn-box">
+                <li><button type="button" class="play btnMenuNext"></button></li>
+                <li><button type="button" class="menu btnMenuShow"></button></li>
+                <li><button type="button" class="help"></button></li>
+
+            </ul>
+            <div class="btn-back btnHistory"></div>
+        </div>
+    </div>
+    <!--/column-left-->
+    <!--column-right-->
+    <div class="column-right" id="secondMenu">
+        <div class="btn-hide" id="btnSecond"></div>
+        <div class="flex-box" id="rightFlexBox">
+            <!--resource-list-->
+            <ul class="resource-list" id="resourceList">
+                <li><button type="button" data-id="1" data-type="answer">问答1</button></li>
+                <li><button type="button" data-id="2" data-type="chess">棋谱2</button></li>
+                <li><button type="button" data-id="3" data-type="video">视频3</button></li>
+            </ul>
+            <!--/resource-list-->
+        </div>
+    </div>
+    <!--/column-right-->
+    <!--play-wrap-->
+    <div class="play-wrap" id="playOpe">
+        <div class="btn-back btnHistory"></div>
+        <div class="btn-play play-left"></div>
+        <div class="btn-play play-right"></div>
+    </div>
+    <!--/play-wrap-->
+</div>
+<!--/left-menu-wrap-->
+
+<!--content-wrap-->
+<div class="content-wrap">
+    <!--answer-box-->
+    <div class="content-panel answer-box" id="answerBox">
+        <div class="content">
+            <!--ans-->
+            <div class="ans">
+                <h2>题目：</h2>
+                <div class="cont">
+                    <p>请小朋友在棋盘上用四颗黑子抓走刚刚放的那颗白棋。</p>
+                </div>
+            </div>
+            <!--/ans-->
+            <!--replay-->
+            <div class="replay">
+                <h2>答案：</h2>
+                <div class="cont">
+                    <p></p>
+                </div>
+            </div>
+            <!--/replay-->
+        </div>
+        <div class="btn-box">
+            <button type="button" class="btn-none btn-right-answer">正确答案</button>
+        </div>
+    </div>
+    <!--/answer-box-->
+    <!--chess-wrap-->
+    <div class="content-panel chess-wrap" id="WQBoard">
+        <div class="chessBox" id="WQBox">
+            <div class="left-wq-wrap" id="leftWQWrap"></div>
+            <!--right-->
+            <div class="right rightPanel">
+                <!--description 描述-->
+                <div class="box description">
+                    <div class="top"><img src="images/box/up.png" alt="" /></div>
+                    <div class="content" id="description"></div>
+                    <div class="bottom"><img src="images/box/btm.png" alt="" /></div>
+                </div>
+                <!--/description-->
+                <!--record-operate 记录操作-->
+                <div class="box hh record-operate">
+                    <div class="top"><img src="images/box/up.png" alt="" /></div>
+                    <div class="content" id="recordOperate"></div>
+                    <div class="bottom"><img src="images/box/btm.png" alt="" /></div>
+                </div>
+                <!--/record-operate-->
+                <!--pieces-operate-->
+                <div class="box hh pieces-operate">
+                    <div class="top"><img src="images/box/up.png" alt="" /></div>
+                    <div class="content" id="piecesOperate"></div>
+                    <div class="bottom"><img src="images/box/btm.png" alt="" /></div>
+                </div>
+                <!--/pieces-operate-->
+                <!--sign-operate 标记-->
+                <div class="box hh sign-operate">
+                    <div class="top"><img src="images/box/up.png" alt="" /></div>
+                    <div class="content" id="signOperate"></div>
+                    <div class="bottom"><img src="images/box/btm.png" alt="" /></div>
+                </div>
+                <!--/sign-operate-->
+            </div>
+            <!--/right-->
+        </div>
+    </div>
+    <!--/chess-wrap-->
+    <!--video-wrap-->
+    <div class="content-panel video-wrap" id="videoWraps">
+        <div style="width: 100%; height: 100%;">
+            <div class="zy_media" id="zy_media">
+                <video preload="auto" id="playVideos" autobuffer playsinline webkit-playsinline>
+                    <source type="video/mp4" src="images/video.mp4" />
+                    您的浏览器不支持HTML5视频
+                </video>
+            </div>
+        </div>
+    </div>
+    <!--/video-wrap-->
+</div>
+<!--/content-wrap-->
+
+<script type="text/html" id="tpl-answer"></script>
+<script type="text/html" id="tpl-chess"></script>
+
+<script type="text/javascript" src="js/pages/classIn_online.js"></script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9,IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8">
+    <title>批改作业 教师端课后系统</title>
+</head>
+<body>
+<!--classIn-menu-->
+<div class="subject-menu" id="subjectWrap">
+    <div class="check-part">
+        <!--left-list-wrap-->
+        <div class="left-list-wrap">
+            <div class="slt-list">
+                <select name="className" id="sltClass" class="slt-class">
+                    <option value="">班级</option>
+                </select>
+                <select name="classTime" id="classTime" class="slt-time">
+                    <option value="">课次</option>
+                </select>
+                <select name="classHour" id="classHour" class="slt-hour">
+                    <option value="">课时</option>
+                </select>
+            </div>
+            <div class="back-box"><button type="button" class="btn-history" id="btnHistory"></button></div>
+        </div>
+        <!--/left-list-wrap-->
+        <div class="right-list-wrap" id="studentList">
+            <div class="list-box" id="memberList">
+            </div>
+            <!--checkAll-->
+            <div class="check-all" id="checkAll">
+                <div class="item-list">
+                    <div class="cell ckb">
+                        <label class="checkbox">
+                            <input type="checkbox" value="15" data-name="全选" id="checkkAllRedoBox">
+                            <i class="circle"></i>
+                        </label>
+                    </div>
+                    <div class="cell info">
+                        <h3 class="md-none">全选</h3>
+                    </div>
+                    <button type="button" class="btn-redo" id="btnRedo"></button>
+                </div>
+            </div>
+            <div class="shrink"><button type="button" id="shrinkMenu"></button></div>
+        </div>
+    </div>
+    <div class="task-part">
+        <!--left-side-wrap-->
+        <div class="left-side-wrap" id="jobWrap">
+            <div class="inner" id="leftListInner">
+            </div>
+            <div class="shrink"><button type="button" id="shrinkSecondMenu"></button></div>
+        </div>
+        <!--/left-side-wrap-->
+        <!--class-operate-->
+        <div class="class-operate" id="classOperate">
+            <button type="button" class="btn-back btn-class-back"></button>
+            <button type="button" class="btn-classPage btn-classPrev" id="btnClassPagePrev"></button>
+            <button type="button" class="btn-classPage btn-classNext" id="btnClassPageNext"></button>
+        </div>
+        <!--/class-operate -->
+        <!--right-side-wrap-->
+        <div class="right-side-wrap">
+            <!--main-wrapper-->
+            <div class="main-wrapper">
+                <div class="inner-box" id="mainWrap">
+                </div>
+            </div>
+            <!--/main-wrapper-->
+        </div>
+        <!--/right-side-wrap-->
+        <!-- 去掉提交按钮
+        <div class="div-submit">
+            <button class="btn-submit" id="btnSubmit"></button>
+        </div>
+        -->
+    </div>
+</div>
+<!--/classIn-menu-->
+<script type="text/html" id="tpl-user">
+    <div class="photo">
+        <div class="circle">
+            <img src="{{if head_url}}{{basePath}}/{{head_url}}{{else}}images/head2.jpg{{/if}}" alt="" />
+        </div>
+        <div class="bg"></div>
+    </div>
+    <div class="name">{{name}}</div>
+</script>
+<!-- * * * * * * * * * * * * * * artTemplate model * * * * * * * * * * * * * * -->
+<!--班级-->
+<script type="text/html" id="tpl-classList">
+    <option value="">班级</option>
+    {{each resultList as value}}
+    <option value="{{value.id}}" data-room="{{value.classroom}}">{{value.name}}</option>
+    {{/each}}
+</script>
+<!--课次-->
+<script type="text/html" id="tpl-classTimeList">
+    <option value="">课次</option>
+    {{each resultList as value}}
+    <option value="{{value.course_time}}">{{value.course_time_name}}</option>
+    {{/each}}
+</script>
+<!--课时-->
+<script type="text/html" id="tpl-classHourList">
+    <option value="">课时</option>
+    {{each resultList as value}}
+    <option value="{{value.course_hour}}" data-rId="{{value.res_id}}" data-time="{{value.time}}">{{value.course_hour_name}}</option>
+    {{/each}}
+</script>
+<!--学生列表-->
+<script type="text/html" id="tpl-studentList">
+    {{each resultList as value}}
+    <div class="item-list" data-jobid = "{{value.id}}">
+        <div class="cell ckb">
+            <label class="checkbox">
+                <input type="checkbox" value="{{value.id}}" name="students" data-name="{{=value.name}}">
+                <i class="circle"></i>
+            </label>
+        </div>
+        <div class="cell head"><img src="{{basePath}}{{value.head_url}}" alt="头像"></div>
+        <div class="cell info">
+            <h3>{{value.name}}</h3>
+            {{if value.level == 3}}
+                <p>专业</p>
+            {{else if value.level == 2}}
+                <p>新手</p>
+            {{else}}
+                <p>入门</p>
+            {{/if}}
+        </div>
+        {{if value.status == 0}}
+            <div class="cell status no-assign"><button>未布置</button></div>
+        {{else if value.status == 1}}
+            <div class="cell status no-submit"><button>未提交</button></div>
+        {{else if value.status == 2}}
+            <div class="cell status no-correct"><button>未批改</button></div>
+        {{else if value.status == 3}}
+            <div class="cell status corrected"><button>已批改</button></div>
+        {{else}}
+            <div class="cell status corrected"><button>待订正</button></div>
+        {{/if}}
+    </div>
+    {{/each}}
+</script>
+<!--课件资源列表容器-->
+<script type="text/html" id="tpl-resource">
+    <div class="resource-list-box">
+        <ul class="resource-list">
+            {{each list as value}}
+            <li>
+                <button type="button" class="btn-res-item"
+                        data-id="{{value.id}}"
+                        data-resid="{{value.res_id}}"
+                        data-answer="{{value.answer}}"
+                        data-mode="{{value.mode}}"
+                        data-type="{{value.continue_type}}"
+                        data-url="{{value.url}}"
+                        data-content='{{value.content}}'
+                        data-stem="{{value.stem}}"
+                        data-score="{{value.score}}"
+                        data-comment="{{value.comment}}"
+                        data-status="{{value.status}}"
+                ><span>{{value.stem}}</span></button>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+</script>
+<!--信息确认-->
+<script type="text/html" id="tpl-alert">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+        <div class="btn-box">
+            <button type="button" class="btn-okay btn-alert-okay"></button>
+        </div>
+    </div>
+</script>
+<!--课件内容 start-->
+<!--1.视频模板-->
+<script type="text/html" id="tpl-videoPanel">
+    <div class="board-video-box" id="boardVideoBox">
+        <div class="zy_media" style="display: block">
+            <video preload="auto" class="video-js vjs-default-skin" controls preload="none" autobuffer playsinline webkit-playsinline>
+                <source type="video/mp4" src="{{url}}" />
+                您的浏览器不支持HTML5视频
+            </video>
+        </div>
+    </div>
+</script>
+<!--2.讲解例题-->
+<script type="text/html" id="tpl-explainPanel">
+    <div class="chess-board-wrap">
+        <!--left-->
+        <div class="left-box">
+            <div class="question">
+                {{stem}}
+            </div>
+            <textarea class="teacher-suggest" name="suggest" id="chessSuggest" placeholder="教师点评...">{{comment}}</textarea>
+            <!--star-->
+            <div class="star" id="chessScore">
+                <div class="score-content">
+                    <ul class="list">
+                        <li><button type="button"></button></li>
+                        <li><button type="button"></button></li>
+                        <li><button type="button"></button></li>
+                        <li><button type="button"></button></li>
+                        <li><button type="button"></button></li>
+                    </ul>
+                    {{if status <=2 }}
+                        <div class="btn-box">
+                            <button type="button" class="chess-star-okay"></button>
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
+            <!--/star-->
+        </div>
+        <!--/left-->
+        <!--chess-board-->
+        <div class="chess-board" id="chessBoardWrap">
+            <div class="board-box" id="boardBox"></div>
+        </div>
+        <!--/chess-board-->
+    </div>
+
+</script>
+<!--3.知识类提问-->
+<script type="text/html" id="tpl-Knowledge">
+    <div class="board-explain-box">
+        <!--question-->
+        <div class="question">
+            <h2>题目：</h2>
+            <div class="content">{{stem}}</div>
+        </div>
+        <!--/question-->
+        <!--answer-->
+        <div class="answer">
+            <h2>学生答案：</h2>
+            <div class="content">{{answer}}</div>
+        </div>
+        <!--/answer-->
+        <!--teacher suggest-->
+        <textarea class="teacher-suggest" name="suggest" id="teacherSuggest" placeholder="教师点评...">{{comment}}</textarea>
+        <!--/teacher suggest-->
+        <!--star-->
+        <div class="star" id="starScore">
+            <div class="score-content">
+                <ul class="list">
+                    <li><button type="button"></button></li>
+                    <li><button type="button"></button></li>
+                    <li><button type="button"></button></li>
+                    <li><button type="button"></button></li>
+                    <li><button type="button"></button></li>
+                </ul>
+                {{if status <=2 }}
+                    <div class="btn-box">
+                        <button type="button" class="btn-star-okay"></button>
+                    </div>
+                {{/if}}
+            </div>
+        </div>
+        <!--/star-->
+    </div>
+    <!--/temp-div-->
+</script>
+<!--课件内容 end-->
+
+<!--发送成功-->
+<script type="text/html" id="tpl-send">
+    <div class="message-info">
+        <div class="btn-box">
+            <img src="{{image}}" alt="图片">
+        </div>
+        <div class="content">{{msg}}</div>
+    </div>
+</script>
+
+<script type="text/javascript" src="js/pages/correctWork.js"></script>
+</body>
+</html>

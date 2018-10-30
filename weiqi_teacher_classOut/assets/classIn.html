@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9,IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8">
+    <title>课堂版 教师端课后系统</title>
+</head>
+<body>
+<!--classIn-menu-->
+<div class="classIn-menu">
+    <div class="head-wrap" id="headWrap"></div>
+    <ul class="list" id="navList">
+        <li data-id="1"><a href="javascript:;" data-text="布置作业">布置作业</a><span class="icon icon-01"></span></li>
+        <li data-id="2"><a href="javascript:;" data-text="排课查询">排课查询</a><span class="icon icon-02"></span></li>
+        <li data-id="3"><a href="javascript:;" data-text="批改作业">批改作业</a><span class="icon icon-03"></span></li>
+        <li data-id="4"><a href="javascript:;" data-text="绩效查询">绩效查询</a><span class="icon icon-04"></span></li>
+    </ul>
+    <div class="btn-back" id="historyBack"></div>
+</div>
+<!--/classIn-menu-->
+<script type="text/html" id="tpl-user">
+    <div class="photo">
+        <div class="circle">
+            <img src="{{if head_url}}{{head_url}}{{else}}images/head2.jpg{{/if}}" alt="" />
+        </div>
+        <div class="bg"></div>
+    </div>
+    <div class="name">{{name}}</div>
+</script>
+<!--退出确认-->
+<script type="text/html" id="tpl-alert">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+        <div class="btn-box">
+            <button type="button" class="btn-okay btn-exit-okay"></button>
+        </div>
+    </div>
+</script>
+<script type="text/javascript" src="js/pages/classIn.js"></script>
+</body>
+</html>

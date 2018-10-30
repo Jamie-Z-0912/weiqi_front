@@ -1,0 +1,8 @@
+index.html                      登录页
+
+classIn.html                    学生端课堂系统
+classIn_online.html             在线学习
+classIn_seatWork.html           课堂作业
+classIn_personal.html           个人中心
+
+correctWork.html                批改作业

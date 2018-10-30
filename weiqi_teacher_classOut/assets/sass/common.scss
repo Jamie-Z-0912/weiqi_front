@@ -1,0 +1,926 @@
+@import "base";
+//https://www.cnblogs.com/samwu/p/4285748.html
+//https://segmentfault.com/a/1190000003931773
+
+//deviceWidth = 320，font-size = 320 / 6.4 = 50px
+//deviceWidth = 375，font-size = 375 / 6.4 = 58.59375px
+//deviceWidth = 414，font-size = 414 / 6.4 = 64.6875px
+//deviceWidth = 500，font-size = 500 / 6.4 = 78.
+
+//(function () {
+//  document.addEventListener('DOMContentLoaded', function () {
+//      var html = document.documentElement;
+//      var windowWidth = html.clientWidth;
+//      html.style.fontSize = windowWidth / 6.4 + 'px';
+////    等价于html.style.fontSize = windowWidth / 640 * 100 + 'px';
+//  }, false);
+//})();
+
+
+*{ @include cleanPM; }
+html,body{ width: $screenWidth; height: $screenHeight; overflow: hidden; font-family: $baseFamily, sans-serif; color: $baseFontColor; }
+html{ font-size: 100px; }
+body{ background: url('../images/bg.jpg') no-repeat left top; background-size: cover; font-size: 0.14px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  &.lg{ background-image: url("../images/lg_bg.jpg"); }
+}
+ul,ol,li{ list-style: none; }
+ul,ol,li,h1,h2,h3,h4,h5,p,dl,dt,dd{ @include cleanPM; }
+
+a:focus{ outline: none; }
+
+.container{ width: $screenWidth; @include autoMid; padding: 0; }
+.placeholder{ color: $colorGray; }
+
+/*login-wrapper*/
+div.login-wrapper{ width: 2.8rem; height: 100%; display: flex; justify-content: center; align-items: center;
+  .lg-wrap{ position: relative; top: -.6rem;
+    .ipt-txt{ width: 2.4rem; padding: .15rem 0;
+      input{ width: 100%; height: .52rem; padding: 0 .15rem; font-size: 0.16rem; color: #FFF; text-align: center; border: .04rem solid rgba(90, 255, 88, .8); background-color: rgba(0, 31, 0, .6); border-radius: .1rem; outline: none;
+        &::placeholder{ text-align: center; font-size: 0.16rem; color: #bfffaa; }
+      }
+    }
+    //ipt-txt end
+    button.btn-lg{ width: 2.4rem; height: .6rem; font-size: .2rem; color: #094d5d; background: url("../images/login_btn.png") no-repeat left top; background-size: 100% 100%; outline: none; border: 0; margin-top: .2rem;
+      span{ display: inline-block; position: relative; top: -.09rem; }
+    }
+    a.btn-forget{ display: inline-block; font-size: .18rem; color: #FFF; text-decoration: underline; background: url("../images/nav/gan.png") no-repeat left center; background-size: auto 100%; padding-left: .35rem; margin-top: .1rem; margin-left: .05rem; }
+  }
+}
+
+$opacityColor : rgba(125, 254, 102, .7);
+
+/*loading-wrapper*/
+div.loading-wrapper{ width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column; background-color: rgba(0, 0, 0, .5); position: fixed; top: 0; left: 0; z-index: 9999999;
+
+  @-webkit-keyframes scale {
+    0% { -webkit-transform: scale(1); transform: scale(1); opacity: 1; }
+    45% { -webkit-transform: scale(0.1); transform: scale(0.1); opacity: 0.7; }
+    80% { -webkit-transform: scale(1); transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes scale {
+    0% { -webkit-transform: scale(1); transform: scale(1); opacity: 1; }
+    45% { -webkit-transform: scale(0.1); transform: scale(0.1); opacity: 0.7; }
+    80% { -webkit-transform: scale(1); transform: scale(1); opacity: 1; }
+  }
+
+  .ball-pulse > div:nth-child(0) { -webkit-animation: scale 0.75s 0s infinite cubic-bezier(.2, .68, .18, 1.08); animation: scale 0.75s 0s infinite cubic-bezier(.2, .68, .18, 1.08); }
+  .ball-pulse > div:nth-child(1) { -webkit-animation: scale 0.75s 0.12s infinite cubic-bezier(.2, .68, .18, 1.08); animation: scale 0.75s 0.12s infinite cubic-bezier(.2, .68, .18, 1.08); }
+  .ball-pulse > div:nth-child(2) { -webkit-animation: scale 0.75s 0.24s infinite cubic-bezier(.2, .68, .18, 1.08); animation: scale 0.75s 0.24s infinite cubic-bezier(.2, .68, .18, 1.08); }
+  .ball-pulse > div:nth-child(3) { -webkit-animation: scale 0.75s 0.36s infinite cubic-bezier(.2, .68, .18, 1.08); animation: scale 0.75s 0.36s infinite cubic-bezier(.2, .68, .18, 1.08); }
+  .ball-pulse > div { background-color: #fff; width: .15rem; height: .15rem; border-radius: 100%; margin: .05rem; -webkit-animation-fill-mode: both; animation-fill-mode: both; display: inline-block; }
+}
+
+/*classIn-menu*/
+div.classIn-menu{ width: 1.85rem; height: 100%; position: relative;
+  .head-wrap{ width: 1.2rem; margin-left: .45rem; margin-top: .2rem;
+    //头像 样式设置
+    .photo{ width: 1rem; height: 1rem; margin: 0 auto; padding: .03rem; /* border:.04rem solid rgba(203, 255, 194, .8);*/  position:relative; z-index: 1;
+      .circle{ border-radius: 1rem; overflow: hidden; position: relative; z-index: 10;
+        img{ width: 100%; min-height: 100%; position: relative; -webkit-clip-path: inset(0 0 20% 0 round 0 0 0 0); }
+      }
+      //circle end
+      .bg{ width: 1rem; height: 1rem; border-radius: 1rem; overflow: hidden; position: absolute; top: 0; left: 0; z-index: 1;
+        &:before{ display: block; content: ''; width: 100%; height: 100%; background-color: $opacityColor; position: absolute; -webkit-clip-path: inset(0 0 20% 0 round 0 0 0 0); }
+      }
+      //bg end
+    }
+    //学生姓名设置
+    .name{ width: 100%; /*height: .35rem;*/ line-height: .32rem; font-family: $fontFamilyFZJTC; font-size: .18rem; color: #ffe559; border-radius: 0.1rem; background-color: rgba(0, 31, 0, .3); border:.03rem solid $opacityColor; text-align: center; -webkit-text-stroke:.01rem #28241b; position: relative; top: -.23rem; z-index: 10; overflow:hidden; white-space:nowrap; text-overflow: ellipsis; }
+  }
+  //head-wrap end
+  ul.list{ width: 100%; height: 2.85rem; position: absolute; top: 50%; margin-top: -1.425rem;
+    li{ padding: .1rem 0; position: relative;
+      a{ display: block; height: .6rem; font-family: $fontFamilyFZJTC; font-size: .3rem; font-weight:bold; line-height: .56rem; color: #ffe659; text-align: center; text-indent: -.1rem; border: .03rem solid $opacityColor; border-left: 0; -webkit-text-stroke:.02rem #28241b; background-color: rgba(0, 0, 0, .3); border-top-right-radius: .1rem; border-bottom-right-radius: .1rem; position: relative;
+        &:hover, &:focus{ text-decoration: none; }
+      }
+
+      span.icon{ display: block; width: 0.5rem; height: 0.5rem; background: no-repeat left center; background-size: 100% 100%; position: absolute; top: 50%; margin-top: -0.25rem; right: -0.25rem; z-index: 1;
+        &.icon-01{ background-image: url("../images/classIn/icon_01.png"); }
+        &.icon-02{ background-image: url("../images/classIn/icon_02.png"); }
+        &.icon-03{ background-image: url("../images/classIn/icon_03.png"); }
+        &.icon-04{ background-image: url("../images/classIn/icon_04.png"); }
+      }
+      //icon end
+    }
+    //li end
+  }
+  //list end
+  .btn-back{ width: .6rem; height: .6rem; background: url("../images/back2.png") no-repeat center; background-size: 100%; position: absolute; left: .4rem; bottom: .3rem; }
+  //btn-back end
+}
+
+/*left-menu-wrap*/
+div.left-menu-wrap{ height: 100%; position: absolute; top: 0; left: 0; z-index: 999;
+  .column-left, .column-right{ width: 1.36rem; height: 100%; text-align: center; padding: 0.1rem 0; background: url("../images/nav/bg.png") repeat-y left top; background-size: 100%; position: relative; transition:All 0.4s ease-in-out;
+    .btn-hide{ width: .3rem; height: .3rem; background: url("../images/nav/nLeft.png") no-repeat center center; background-size: 100%; position: absolute; right: -.085rem; top: 50%; margin-top: -.15rem; z-index: 10; transition:All 0.4s ease-in-out; transform:rotate(180deg); }
+    &.showIt{
+      .btn-hide{ transform:rotate(0deg); }
+    }
+    .flex-box{ width: 1.28rem; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column; overflow-y: auto; position: relative; z-index: 1;
+      &.flexStart{ justify-content: flex-start; }
+    }
+  }
+  .column-left{ position: relative; left: -1.16rem; z-index: 2;
+    &.showIt{ left: 0; }
+    .flex-box{ display: block; overflow: hidden; }
+    select.my-select{ width: 1.05rem; height: .4rem; font-size: .16rem; color: #ffe659; border-radius: .1rem; border: .04rem solid rgba(90, 255, 88, .8);  margin: .06rem auto; padding: 0 .2rem 0 .08rem; outline: none; appearance:none; background: rgba(0, 31, 0, .6) url("../images/nav/arrow.png") no-repeat right .06rem center; background-size: .1rem auto; }
+    ul.btn-box{ padding: .2rem 0 .1rem;
+      button{ width: .8rem; height: .8rem; margin: .03rem 0; border: 0; outline: none; background: no-repeat center center; background-size: 100%; position: relative;
+        &.play{ background-image: url("../images/nav/icon_01.png"); }
+        &.menu{ background-image: url("../images/nav/icon_02.png"); }
+        &.help{ background-image: url("../images/nav/icon_03.png");
+          &:before{ display: block; width: .26rem; height: .26rem; content: ''; background: url("../images/nav/gan.png") no-repeat center; background-size: 100%; position: absolute; top: -.02rem; right: -.001rem; z-index: 1; }
+        }
+
+        &.downIt{ opacity: .8; }
+      }
+    }
+    //btn-box end
+    .btn-back{ display: inline-block; width: .6rem; height: .6rem; background: url("../images/back2.png") no-repeat center; background-size: 100% 100%; position: absolute; left: 50%; bottom: 0; margin-left: -.3rem; }
+  }
+  //column-left end
+  .column-right{ position: absolute; left: 1.3rem; top: -100%; z-index: 1;
+    &.showIt{ top: 0; }
+    &.class-in{ width: 2rem;
+      .flex-box{ width: 1.9rem;
+        .status{ font-size: .14rem; color: #3c3c3c; text-decoration: underline; display: inline-block; margin-left: .05rem;
+          &.okay{ color: #00580f; text-decoration: none; }
+        }
+        //status end
+      }
+    }
+    ul.resource-list{
+      li{ padding: .08rem 0;
+        button{ width: .95rem; height: .45rem; font-size: .16rem; color: #2c450e; padding-bottom: .08rem; background: url("../images/nav/btn.png") no-repeat left center; background-size: 100% 100%; border: 0; outline: none;
+          &.active{ background-image: url("../images/nav/btn_hover.png"); }
+        }
+      }
+    }
+    //resource-list end
+  }
+  //column-right end
+  .play-wrap{  width: 3.5rem; opacity: 0; padding: 0 .5rem; position: absolute; left: 0; bottom: 0; z-index: 3; transition:All 0.4s ease-in-out;
+    //&.active{ opacity: 1; }
+    .btn-back{ display: inline-block; vertical-align: middle; width: .6rem; height: .6rem; background: url("../images/back2.png") no-repeat center; background-size: 100% 100%; margin-right: .1rem; }
+    .btn-play{ display: inline-block; vertical-align: middle; margin: 0 .1rem .09rem; width: .42rem; height: .42rem; background: no-repeat center; background-size: 100% 100%;
+      &.play-left{ background-image: url("../images/play_left.png"); }
+      &.play-right{ background-image: url("../images/play_right.png"); }
+    }
+  }
+  //play-wrap end
+}
+
+/*content-wrap*/
+div.content-wrap{ width: 100%; height: 100%; position: relative; z-index: 1;
+  .answer-box{ display: none; width: 6.5rem; height: 3.65rem; padding: .42rem .5rem; background: url("../images/board.png") no-repeat center top; background-size: 100% 100%; position: absolute; top: 50%; left: 50%; margin-top: -1.825rem; margin-left: -3.25rem;
+    .content{ width: 100%; height: 100%;
+      .ans, .replay{ width: 100%; height: 50%; padding-top: .36rem; padding-bottom: .12rem; position: relative; }
+
+      h2{ font-size: .24rem; color: #2855b9; background-color: #8bd1ff; position: absolute; top: 0; left: 0; z-index: 10; }
+      .cont{ font-size: .18rem; color: #333; width: 100%; height: 100%; overflow-y: auto; position: relative; z-index: 1; }
+
+      .replay{
+        .cont{ display: none; }
+      }
+    }
+    //content end
+    .btn-box{ width: 100%; text-align: center; position: absolute; left: 0; bottom: -.2rem; z-index: 2;
+      button.btn-none{ width: 1.4rem; height: .4rem; font-size: .2rem; color: #802d00; background: url("../images/answer_btn.png") no-repeat top center; background-size: 100%; border: 0; outline: none; }
+    }
+    //btn-box end
+  }
+  //answer-box end
+}
+
+/*chess-wrap*/
+div.chess-wrap{ visibility: hidden; width: 7rem; height: 5.4rem; background: url("../images/chess/board.png") no-repeat left top; background-size: 100% 100%; position: absolute; top: 50%; left: 50%; margin-left: -3.5rem; margin-top: -2.7rem;
+  .chessBox{ padding: 0 .25rem;
+    &:after{ display: block; content: ''; clear: both; }
+    .left-wq-wrap{ width: 4.4rem; height: 4.4rem; margin-top: .42rem; float: left;}
+
+    //right
+    .right{ width: 1.8rem; height: 4.2rem; margin-top: .42rem; position: relative; float: right;
+      .description{
+        .content{ /*padding: 0 5%;*/ height: 2.8rem; padding: 15px; color: #FFF; font-size: .16rem; line-height: 36px;
+          overflow-x: hidden; overflow-y: auto;
+        }
+      }
+      .box{  position: relative; margin: .15rem 0 0; border: 1px solid #333; background-color: rgba(0, 0, 0, .3);
+        &:first-child{ margin-top: 0; }
+        img{ display: block; width: 100%; }
+        .top, .bottom{ display: none; }
+        .content{ width: 100%; padding: .05rem .08rem; /* background: url("../images/box/mid.png") repeat-y left top; background-size: 100%;*/
+          i{ display: inline-block; width: 30px; height: 30px; vertical-align: middle; background: no-repeat center center / auto 100%; margin-left: 6px;
+            &:first-child{ margin-left: 0; }
+            &.btn-retreat{ background-image: url("../images/chess/first.png"); }          //后退
+            &.btn-back{ background-image: url("../images/back.png"); }              //后一步
+            &.btn-next{ background-image: url("../images/chess/next.png"); }              //下一步
+            &.btn-advance{ background-image: url("../images/chess/last.png"); }           //最后
+            &.btn-alternate{ background-image: url("../images/chess/wb.png"); }           //黑白
+            &.btn-black{ background-image: url("../images/chess/black.png"); }          //黑
+            &.btn-white{ background-image: url("../images/chess/white.png"); }          //白
+            &.btn-delete{ background-image: url("../images/chess/d.png"); }             //提子
+            &.btn-triangle{ background-image: url("../images/chess/t.png"); }           //三角形
+            &.btn-triangle2{ background-image: url("../images/chess/t_black.png"); }           //三角形
+            &.btn-square{ background-image: url("../images/chess/q.png"); }             //正方形
+            &.btn-square2{ background-image: url("../images/chess/q_black.png"); }             //正方形
+            &.btn-roundness{ background-image: url("../images/chess/c.png"); }        //圆
+            &.btn-roundness2{ background-image: url("../images/chess/c_black.png"); }        //圆
+            &.btn-fork{ background-image: url("../images/chess/x.png"); }             //差
+            &.btn-fork{ background-image: url("../images/chess/x_black.png"); }             //差
+            &.btn-wipe{ background-image: url("../images/chess/w.png"); }           //擦除
+          }
+          //i end
+        }
+        &.hh{
+          .content{ height: .36rem; }
+        }
+        //hh end
+        &.record-operate{ background-color: rgba(0, 0, 0, .3); }
+        &.pieces-operate{ background-color: rgba(0, 0, 0, .3); }
+        &.sign-operate{ background-color: rgba(0, 0, 0, .3); }
+      }
+    }
+    //right end
+    .right.rightPanel.panel2{
+      .btn-boxs{ padding-top: .15rem; width: 100%; text-align: center;
+        button{ display: inline-block; width: 1.5rem; height: .5rem; border: 0; font-size: .16rem; outline: none; background: url("../images/main/btn.png") no-repeat left center / 100% 100%; };
+      }
+    }
+    //right end
+  }
+}
+
+/*video-wrap*/
+div.video-wrap{ visibility: hidden; width: 7rem; height: 5.4rem; background: url("../images/board.png") no-repeat left top; background-size: 100% 100%; position: absolute; top: 50%; left: 50%; margin-left: -3.5rem; margin-top: -2.7rem; padding: .5rem .3rem;
+}
+
+/*弹框*/
+div.dialog-wrapper{ display: none; width: 100%; height: 100%; background-color: rgba(0, 0, 0, .5); position: fixed; top: 0; left: 0; z-index: 99999;
+  .model-body{ width: 5.9rem; height: 4rem; background: url("../images/login/bg1.png") no-repeat center; background-size: 100% 100%; position: absolute; left: 50%; top: 50%; margin-left: -2.95rem; margin-top: -2rem; transition:All 0.3s ease-in-out;
+    .button-close{ width: .8rem; height: .8rem; background: url("../images/login/close.png") no-repeat center; background-size: 100% 100%; position: absolute; top: -.25rem; left: -.15rem; }
+    .model-content{ width: 5.2rem; height: 3.5rem; margin: 0 auto; text-align: center; display: flex; justify-content: center; align-items: center; flex-direction: column;
+      .cell{ margin: 0 auto; text-align: center;
+        img{ max-width: 100%; }
+      }
+      .tel-tit{ width: 2.4rem; margin-bottom: .2rem; }
+      .tel-phone{ width: 4.3rem; }
+    }
+  }
+  //model-body end
+  &.rotateScale{
+    .model-body{ transform:rotate(0deg) scale(0);
+      &.active{ transform:rotate(360deg) scale(1); }
+    }
+    //model-body end
+  }
+  //rotateScale end
+  &.messageScale{
+    .model-body{ transform:scale(0);
+      &.active{ transform: scale(1); }
+    }
+  }
+}
+
+//message-info
+div.message-info{ padding-top: .2rem;
+  .content{ font-size: .3rem; color: #135ba0; padding: .1rem .15rem; }
+  .btn-box{
+    button{ width: 1.8rem; height: .7rem; background: no-repeat center center; background-size: 100% 100%; border: none; outline: none;
+      &.btn-okay{ margin-top: .18rem; background-image: url("../images/btn1.png"); }
+      &.btn-cancel{ background-image: url("../images/btn_cancel.png"); }
+    }
+    //button end
+  }
+  //btn-box end
+}
+
+/*覆盖式弹框*/
+div.modal-wrapper{ display: none; width: 100%; height: 100%; background-color: rgba(0, 0, 0, .5); position: fixed; top: 0; left: 0; z-index: 99999;
+  .model-body{ width: 5.9rem; height: 4rem; position: absolute; left: 50%; top: 50%; margin-left: -2.95rem; margin-top: -2rem; transition:All 0.3s ease-in-out;
+    .model-content{ width: 5.2rem; height: 3.5rem; margin: 0 auto; text-align: center; display: flex; justify-content: center; align-items: center; flex-direction: column;
+      .btn-box{
+        img{width: 1.25rem;height: 1.25rem;}
+      }
+      .content{max-width: 5.6rem;text-align: center;color:$colorYellow;padding: 0;text-align: center;}
+    }
+  }
+}
+
+//- - - - - - - - - - - - - - - - - - - - - - - - 批改作业 correctWork - - - - - - - - - - - - - - - - - - - - - - - -
+div.subject-menu{ width:100%;height: 100%;position: relative;z-index: 100;
+  .check-part, .task-part{ width: 100%;height:100%;position:absolute;top: 0;left:0;
+  }
+  .check-part{ /* display:none; */
+    .left-list-wrap, .right-list-wrap{ height: 100%; padding: .1rem; position: absolute; top: 0; transition:All 0.4s ease-in-out;
+    }
+    //left-list-wrap
+    .left-list-wrap{ width: 1.4rem; left: 0; z-index: 3; background: url("../images/bzzy/bg_1.jpg") no-repeat top left; background-size: 100% 100%;
+      .back-box{ width: 100%; text-align: center; position: absolute; left: 0; bottom: 0; z-index: 999;
+        button.btn-history{ width: .6rem; height: .6rem; border: 0; outline: none; background: url('../images/back2.png') no-repeat center center; background-size: 100% 100%; }
+      }
+      //back-box end
+      .slt-list{ height: 100%;display:flex;flex-wrap: wrap;align-content: center;
+        select{ width: 1.2rem; height: .35rem; font-size: .15rem; color: #ffe659; text-align: center; border-radius: .1rem; border: .03rem solid #50ff6e; margin: .06rem auto; padding: 0 .2rem 0 .08rem; outline: none; appearance:none; background: rgba(0, 31, 0, .6) url("../images/nav/arrow.png") no-repeat right .06rem center; background-size: .1rem auto; }
+        input.ipt-txt{ width: 1.2rem; height: .35rem; margin: .06rem auto; padding: 0 .08rem; font-size: .15rem; color: #ffe659; border-radius: .1rem; border: .03rem solid #50ff6e;; outline: none; background: rgba(0, 31, 0, .6) no-repeat; background-size: .1rem auto;
+          &:-moz-placeholder{ color: #ffe659; }
+          &::-webkit-input-placeholder{ color: #ffe659; }
+          &:-ms-input-placeholder{ color: #ffe659; }
+        }
+        //input end
+      }
+      //slt-list end
+    }
+    //left-list-wrap end
+    .right-list-wrap{ width: 3rem; left: 1.4rem; z-index: 1; padding-bottom: .1rem; background: url("../images/menu_bg3.jpg") no-repeat top left; background-size: 100% 100%;position: relative;
+      .list-box{ width: 100%; height: 90%; overflow-y: auto; padding: 0 .05rem;
+        .item-list{ padding: .07rem 0;height:.61rem;margin:.26rem 0rem;
+          &:after{ display: block; content: ''; clear: both; }
+          .cell{ display: inline-block; vertical-align: middle; }
+          .head{ width: .61rem; height: .61rem; overflow: hidden; border-radius: 1rem; border: .02rem solid #84f4d2;
+            img{ width: 100%; }
+          }
+          .ckb{ margin-right: .1rem;
+            label.checkbox{ margin: 0 !important;
+              input[type=checkbox]{ display: none; }
+              i.circle{ display: block; width: .25rem; height: .25rem; border-radius: 1rem; border : .02rem solid #f7e259; }
+              input[type=checkbox]:checked + i.circle{ background-color: #5fbc00; }
+              input[type=checkbox]:checked:disabled + i.circle{ opacity: .3; }
+            }
+          }
+          //ckb end
+
+          //head end
+          .info{ width: .95rem; padding: 0 .1rem; text-align: center; -webkit-text-stroke:.01rem $textBorder;font-family: $fontFamilyFZJTC;
+            h3{ font-size: .21rem; color: $colorYellow; margin-bottom: .05rem; overflow:hidden; white-space:nowrap; text-overflow: ellipsis;
+              &.md-none{ margin-bottom: 0; }
+            }
+            p{ font-size: .15rem; color: $colorWhite; overflow:hidden; white-space:nowrap; text-overflow: ellipsis; }
+          }
+          //info end
+          .status{ font-size: .12rem;height: .61rem;line-height: .61rem; text-align: right;float: right;font-family: $fontFamilyFZJTC;
+            &.no-assign{color: #a12222;text-decoration: underline;}
+            &.no-submit{color: #ffffff;}
+            &.no-correct{
+              width: .5rem;
+              color:transparent;
+              background: url("../images/homework/btn_edit.png") no-repeat center center;
+              background-size: 100%;
+            }
+            &.corrected{color:#00580f;}
+            button{ border: none;outline: none;background: none;
+            }
+          }
+          .score{ width: .36rem; font-size: .16rem; color: #FFF; text-shadow: 0 0 .1rem rgba(0, 0, 0, 1); text-align: right; }
+          //score end
+        }
+        //item-list end
+      }
+      //list-box end
+      .check-all{ position: absolute; bottom: .1rem;width: 100%;
+        .item-list{ padding: 0;height: .31rem;line-height: .31rem;
+          &:after{ display: block; content: ''; clear: both; }
+          .cell{ display: inline-block;}
+          .info{ width: .95rem; padding: 0 .1rem; text-align: center;
+            h3{ font-size: .2rem; color: #ffe659; text-shadow: 0 0 .02rem rgba(0, 0, 0, 1); margin-bottom: .05rem; overflow:hidden; white-space:nowrap; text-overflow: ellipsis;
+              &.md-none{ margin-bottom: 0; }
+            }
+          }
+          //info end
+          .ckb{
+            label.checkbox{ margin: 0 !important;
+              input[type=checkbox]{ display: none; }
+              i.circle{ display: block; width: .25rem; height: .25rem; border-radius: 1rem; border : .02rem solid #f7e259; }
+              input[type=checkbox]:checked + i.circle{ background-color: #5fbc00; }
+              input[type=checkbox]:checked:disabled + i.circle{ opacity: .3; }
+            }
+          }
+          //ckb end
+          .btn-redo{ margin-bottom: 0; width: .86rem; height: .31rem; background: url("../images/homework/btn_redo.png") center bottom no-repeat; background-size: 100% 100%; border: 0; outline: 0; position: relative; top:.06rem; right: .3rem;float: right;
+          }
+        }
+      }
+      //shrink start
+      .shrink { width: .35rem; height: .35rem; position: absolute; top: .21rem; right: -.135rem; z-index: 999;
+        button{ width: 100%; height: 100%; border: 0; outline: none; background: url("../images/nav/nLeft.png") no-repeat center; background-size: 100% 100%; }
+      }
+      &.indent{ left: -.75rem;
+        .shrink{ right: -.175rem !important;
+          button{ background-image: url("../images/nav/nRight.png") !important; }
+        }
+      }
+      //shrink end
+    }
+  }
+  //check-part end
+  .task-part{ display:none;
+    .left-side-wrap, .right-side-wrap{height: 100%;padding: .1rem;position: absolute; top: 0; transition:All 0.4s ease-in-out;
+    }
+    //left-side-wrap start
+    .left-side-wrap{ width: 1.4rem; left: 0rem; z-index: 2; padding-bottom: .1rem; background: url("../images/bzzy/bg_2.jpg") no-repeat top left; background-size: 100% 100%;
+      .inner{height: 100%;
+        .resource-list-box{height: 100%}
+      }
+      ul.resource-list{ width: 1.2rem; height: 80%; padding: 0rem; overflow-y: auto; margin: 0 auto;
+        li{ width: 100%; height: .45rem; margin-bottom: .1rem; position: relative;
+          &:before, &:after{ display: block; content: ''; width: .14rem; height: .45rem; background: no-repeat; background-size: 100% 100%; float: left; }
+          &:before{ background-image: url("../images/homework/btn2_01.png"); }
+          &:after{ background-image: url("../images/homework/btn2_03.png"); }
+          button{ width: 0.8rem; height: .45rem; border: 0; outline: none; background: url("../images/homework/btn2_02.png") repeat-x left center; background-size: auto 100%; float: left;
+            span{ display: block; width: 100%; font-size: .16rem; color: #585353; overflow:hidden; white-space:nowrap; text-overflow: ellipsis; padding: 0 .17rem 0 .08rem; position: absolute; top: .06rem; left: 0; z-index: 1; }
+          }
+          &.active{
+            &:before{ background-image: url("../images/homework/btn1_01.png"); }
+            &:after{ background-image: url("../images/homework/btn1_03.png"); }
+            button{ background-image: url("../images/homework/btn1_02.png"); }
+          }
+          //active end
+        }
+        //li end
+        &:after{ display: block; content: ''; clear: both; }
+      }
+      //resource-list end
+      //shrink start
+      .shrink { width: .35rem; height: .35rem; position: absolute; top: 50%; right: -.135rem; margin-top: -.175rem; z-index: 999;
+        button{ width: 100%; height: 100%; border: 0; outline: none; background: url("../images/nav/nLeft.png") no-repeat center; background-size: 100% 100%; }
+      }
+      &.scale-active{ left: -1.1rem;
+        .shrink{ right: -.175rem !important;
+          button{ background-image: url("../images/nav/nRight.png") !important; }
+        }
+      }
+      //shrink end
+    }
+    //left-side-wrap end
+    //operate start
+    .class-operate{ display: block; width: 2rem; position: absolute; left: .3rem; bottom: 0; z-index: 999;
+      button{ margin: 0 .08rem; background: no-repeat center; background-size: 100% 100%; outline: none; border: 0; vertical-align: middle;
+        &.btn-back{ width: .6rem; height: .6rem; background-image: url("../images/back2.png"); }
+        &.btn-classPrev, &.btn-classNext{ width: .4rem; height: .4rem;
+          &:disabled{ opacity: .5; }
+        }
+        &.btn-classPrev{ background-image: url("../images/play_left.png"); }
+        &.btn-classNext{ background-image: url("../images/play_right.png"); }
+      }
+    }
+    //operate end
+    //right-side-wrap start
+    /*main-wrapper*/
+    .right-side-wrap{width: 100%;height:100%;
+    }
+    div.main-wrapper{ width: 100%; height: 100%; padding: .2rem .2rem .2rem .8rem; position: absolute; top: 0; left: 0; z-index: 1;
+      .inner-box{ width: 100%; height: 100%; position: relative; }
+      .board-video-box{ width: 6.5rem; height: 4.2rem; position: absolute; left: 50%; top: 50%; margin-top: -2.1rem; margin-left: -3.25rem;
+        .zy_media{ border:.04rem solid rgba(56, 255, 41, .8); position: relative;
+          video{ max-width: 100%; }
+        }
+      }
+      //board-video-box end
+      .board-explain-box{ width: 5.5rem;/* height: 3.7rem;*/ padding: .5rem .5rem; background: url("../images/board2.png") no-repeat center center; background-size: 100% 100%; position: absolute; left: 50%;margin-top:.2rem; margin-left: -3.25rem;
+        .question, .answer{ height: .92rem; }
+        h2{ color: #00747c; font-size: .18rem; margin-bottom: .1rem; }
+        .content{ font-size: .18rem; color: #202020; height: .57rem; overflow-y: auto; }
+        button.btn-explain-answer{ width: 1.4rem; height: .6rem; background: url("../images/btn8.png") no-repeat top center; background-size: 100%; position: absolute; left: 50%; bottom: -.25rem; margin-left: -.7rem; border: 0; outline: none; }
+        .answer{
+        }
+        .teacher-suggest{ width: 100%;height: 1.2rem;border-radius:.1rem; -moz-border-radius:.1rem; -webkit-border-radius:.1rem;outline: none;padding: .1rem .08rem;font-size: .18rem;background-color: #b9fd42;border:none;
+        }
+        // star score
+        .star{ margin-top: .1rem;
+          .score-content{ width: 100%; height: .52rem; padding: .08rem 0;position:relative;
+            ul.list{ height: .36rem;position: absolute;right: 1.6rem;top: 0;
+              &:after{ display: block; content: ''; clear: both; }
+              li{ padding: 0 .05rem; float: left;
+                button{ width: .36rem; height: .36rem; background: url("../images/star/star.png") no-repeat center; background-size: 100% 100%; border: 0; outline: none; }
+                &.active{
+                  button{ background-image: url("../images/star/star_hover.png"); }
+                }
+              }
+              //li end
+            }
+            //ul.list end
+            .btn-box{width: 1.5rem;height: .52rem;padding: 0 .1rem;position: absolute;top: 0;right: 0;
+              button{width: 1.3rem; height: .52rem; background: url("../images/btn1.png") no-repeat center; background-size: 100% 100%;border: 0;outline: none;}
+            }
+            //btn-box end
+          }
+        }
+        // star end
+      }
+      //board-explain-box end
+      .chess-board-wrap{ width: 6.5rem; height: 5rem; position: absolute; left: 50%; top: 50%; margin-top: -2.5rem; margin-left: -3.25rem;
+        .left-box{ width: 2.5rem; height: 4rem; position: relative; top: 50%; margin-top: -2rem; background: url("../images/bg2.png") no-repeat top left; background-size: 100% 100%; z-index: 1;
+          .question{ width: 1.88rem; height: 1.2rem;font-weight: bold; background: url("../images/question.png") no-repeat left top; background-size: 100% 100%; font-size: .18rem; color: #ffe659; padding: .1rem; overflow-y: auto; position: relative; left: .15rem; top: .13rem;text-shadow: 0 0 0.2rem #000, 0 0 0.2rem #000;}
+          //question end
+          .teacher-suggest{ width: 1.88rem;position:relative;left:.15rem;top:.23rem; height: 1.2rem;border-radius:.1rem; -moz-border-radius:.1rem; -webkit-border-radius:.1rem;outline: none;padding: .1rem;font-size: .18rem;font-weight: 700;background:url(../images/question.png) left top no-repeat;background-size: 100% 100%; border:none;color: $colorYellow;text-shadow: 0 0 0.2rem #000, 0 0 0.2rem #000;
+          }
+          // star score
+          .star{ margin-top: .3rem;
+            .score-content{ width: 100%; height: .52rem; padding: .15rem .15rem;position:relative;
+              ul.list{ height: .36rem;position: absolute;width: 100%;top: 0;
+                &:after{ display: block; content: ''; clear: both; }
+                li{ float: left;padding: 0 .02rem;
+                  button{ width: .33rem; height: .33rem; background: url("../images/star/star.png") no-repeat center; background-size: 100% 100%; border: 0; outline: none; }
+                  &.active{
+                    button{ background-image: url("../images/star/star_hover.png"); }
+                  }
+                }
+                //li end
+              }
+              //ul.list end
+              .btn-box{width: 100%;height: .52rem;padding: 0 .1rem; position: relative;top: .3rem;text-align: center;right: .2rem;
+                button{width: 1.3rem; height: .52rem; background: url("../images/btn1.png") no-repeat center; background-size: 100% 100%;border: 0;outline: none;}
+              }
+              //btn-box end
+            }
+          }
+          // star end
+        }
+        .chess-board{ width: 4.36rem; height: 4.36rem; padding: .1rem; box-shadow: .03rem .08rem .15rem rgba(0, 0, 0, .1); background: url("../images/board3.png") no-repeat center center; background-size: 100% 100%; position: absolute; top: 50%; margin-top: -2.18rem; right: 0; z-index: 10;
+          .board-box{ width: 100%; height: 100%; position: relative; }
+        }
+      }
+      //chess-board-wrap end
+      button.btn-scale-chess{ width: .42rem; height: .42rem; border:0; outline: none; background: url("../images/btn_scale.png") no-repeat center center; background-size: 100%; position: fixed; right:.2rem; bottom: .2rem; z-index: 99;
+        &.active{ background-image: url("../images/btn_shake.png"); }
+      }
+    }
+    //right-side-wrap end
+    //btn-submit
+    .div-submit{ position: absolute;bottom: .52rem;left: .2rem;z-index: 9999;
+      button{width: 1rem; height: .47rem; background: url("../images/star/btn-submit.png") no-repeat center; background-size: 100% 100%;border: 0;outline: none;}
+    }
+  }
+  //task-part end
+}
+
+//- - - - - - - - - - - - - - - - - - - - - - - - 布置作业 assignWork - - - - - - - - - - - - - - - - - - - - - - - -
+div.assign-menu{ width: 100%; height: 100%; position: relative; z-index: 100;
+  .left-list-wrap, .center-list-wrap, .right-list-wrap{ height: 100%; padding: .1rem; position: absolute; top: 0; transition:All 0.4s ease-in-out;
+  }
+  //left-list-wrap
+  .left-list-wrap{ width: 1.4rem; left: 0; z-index: 3; background: url("../images/bzzy/bg_1.jpg") no-repeat top left; background-size: 100% 100%;
+    .back-box{ width: 100%; text-align: center; position: absolute; left: 0; bottom: 0; z-index: 999;
+      button.btn-history{ width: .6rem; height: .6rem; border: 0; outline: none; background: url('../images/back2.png') no-repeat center center; background-size: 100% 100%; }
+    }
+    //back-box end
+    .slt-list{ height: 100%;display:flex;flex-wrap: wrap;align-content: center;
+      select{ width: 1.2rem; height: .35rem; font-size: .15rem; color: #ffe659; text-align: center; border-radius: .1rem; border: .03rem solid #50ff6e; margin: .06rem auto; padding: 0 .2rem 0 .08rem; outline: none; appearance:none; background: rgba(0, 31, 0, .6) url("../images/nav/arrow.png") no-repeat right .06rem center; background-size: .1rem auto; }
+      input.ipt-txt{ width: 1.2rem; height: .35rem; margin: .06rem auto; padding: 0 .08rem; font-size: .15rem; color: #ffe659; border-radius: .1rem; border: .03rem solid #50ff6e;; outline: none; background: rgba(0, 31, 0, .6) no-repeat; background-size: .1rem auto;
+        &:-moz-placeholder{ color: #ffe659; }
+        &::-webkit-input-placeholder{ color: #ffe659; }
+        &:-ms-input-placeholder{ color: #ffe659; }
+      }
+      //input end
+    }
+    //slt-list end
+  }
+  //left-list-wrap end
+  //center-list-wrap
+  .center-list-wrap{ width: 1.4rem; left: 1.4rem; z-index: 2; padding-bottom: .1rem; background: url("../images/bzzy/bg_2.jpg") no-repeat top left; background-size: 100% 100%;
+    .inner{height: 100%;
+      .resource-list-box{height: 100%}
+    }
+    ul.resource-list{ width: 1.2rem; height: 100%; padding: 0rem; overflow-y: auto; margin: 0 auto;
+      li{ width: 100%; height: .45rem; margin-bottom: .1rem; position: relative;
+        &:before, &:after{ display: block; content: ''; width: .14rem; height: .45rem; background: no-repeat; background-size: 100% 100%; float: left; }
+        &:before{ background-image: url("../images/homework/btn2_01.png"); }
+        &:after{ background-image: url("../images/homework/btn2_03.png"); }
+        button{ width: 0.8rem; height: .45rem; border: 0; outline: none; background: url("../images/homework/btn2_02.png") repeat-x left center; background-size: auto 100%; float: left;
+          span{ display: block; width: 100%; font-size: .16rem; color: #585353; overflow:hidden; white-space:nowrap; text-overflow: ellipsis; padding: 0 .17rem 0 .08rem; position: absolute; top: .06rem; left: 0; z-index: 1; }
+        }
+        &.active{
+          &:before{ background-image: url("../images/homework/btn1_01.png"); }
+          &:after{ background-image: url("../images/homework/btn1_03.png"); }
+          button{ background-image: url("../images/homework/btn1_02.png"); }
+        }
+        //active end
+      }
+      //li end
+      &:after{ display: block; content: ''; clear: both; }
+    }
+    //resource-list end
+  }
+  //center-list-wrap end
+  //right-list-wrap
+  .right-list-wrap{ width: 2.3rem;left:2.8rem;z-index: 1;padding-bottom: .7rem;background: url("../images/bzzy/bg_3.png") no-repeat top left; background-size: 100% 100%;font-family: $fontFamilyFZJTC;
+    .list-box{ width: 100%; height: 100%; overflow-y: auto; padding: 0 .05rem;
+      .item-list{ padding: .07rem 0;
+        &:after{ display: block; content: ''; clear: both; }
+        .cell{ display: inline-block; vertical-align: middle; }
+        .info{ width: .95rem; padding: 0 .1rem; text-align: center;
+          h3{ font-size: .2rem; color: #ffe659; margin-bottom: .05rem; overflow:hidden; white-space:nowrap; text-overflow: ellipsis; -webkit-text-stroke:.01rem $textBorder;
+            &.md-none{ margin-bottom: 0; }
+          }
+        }
+        //info end
+        .ckb{
+          label.checkbox{ margin: 0 !important;
+            input[type=checkbox]{ display: none; }
+            i.circle{ display: block; width: .25rem; height: .25rem; border-radius: 1rem; border : .02rem solid #f7e259; }
+            input[type=checkbox]:checked + i.circle{ background-color: #5fbc00; }
+            input[type=checkbox]:checked:disabled + i.circle{ opacity: .3; }
+          }
+        }
+        //ckb end
+        .status{ font-size: .16rem; text-align: right;float: right;
+          &.already{color: $textDid; //已布置
+          }
+          &.unalready{
+            color: $textUnDo; //未布置
+            text-decoration: underline;
+          }
+        }
+        //status end
+      }
+      //item-list end
+    }
+    .check-all{ position: absolute; bottom: .1rem;
+      .item-list{ padding: 0;height: .31rem;line-height: .31rem;
+        &:after{ display: block; content: ''; clear: both; }
+        .cell{ display: inline-block;}
+        .info{ width: .95rem; padding: 0 .1rem; text-align: center;
+          h3{ font-size: .2rem; color: #ffe659; text-shadow: 0 0 .02rem rgba(0, 0, 0, 1); margin-bottom: .05rem; overflow:hidden; white-space:nowrap; text-overflow: ellipsis;
+            &.md-none{ margin-bottom: 0; }
+          }
+        }
+        //info end
+        .ckb{
+          label.checkbox{ margin: 0 !important;
+            input[type=checkbox]{ display: none; }
+            i.circle{ display: block; width: .25rem; height: .25rem; border-radius: 1rem; border : .02rem solid #f7e259; }
+            input[type=checkbox]:checked + i.circle{ background-color: #5fbc00; }
+            input[type=checkbox]:checked:disabled + i.circle{ opacity: .3; }
+          }
+        }
+        //ckb end
+        .btn-send{ margin-bottom: 0; width: .86rem; height: .31rem; background: url("../images/homework/btn_send.png") center bottom no-repeat; background-size: 100% 100%; border: 0; outline: 0; position: relative; top: .06rem;
+        }
+      }
+    }
+  }
+  //right-list-wrap end
+
+  .shrink{ width: .35rem; height: .35rem; position: absolute; top: 50%; right: -.135rem; margin-top: -.175rem; z-index: 999;
+    button{ width: 100%; height: 100%; border: 0; outline: none; background: url("../images/nav/nLeft.png") no-repeat center; background-size: 100% 100%; }
+  }
+  //shrink end
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - 菜单收缩 - - - - - - - - - - - - - - - - - - - - - - - -
+  &.scale-active{ width: .8rem !important;
+    .center-list-wrap{ left: 0.3rem;
+      .shrink{ right: -0.185rem !important;
+        button{ background-image: url("../images/nav/nRight.png") !important; }
+      }
+    }
+    .right-list-wrap{ left: -0.25rem;
+      .shrink{ right: -0.185rem !important;
+        button{ background-image: url("../images/nav/nRight.png") !important; }
+      }
+    }
+    .class-operate{ display: block; }
+  }
+}
+//布置作业 assignWork end
+
+//- - - - - - - - - - - - - - - - - - - - - - - - 绩效查询 archieveSelect - - - - - - - - - - - - - - - - - - - - - - - -
+div.archieve-info-wrapper{
+  width: 100%; height: 100%; padding: 1rem 1.12rem .65rem; position: relative;
+  .archieve-info-content{
+    width: 6.01rem;
+    height: 3.27rem;
+    position: relative;
+    margin: 0 auto; background: url("../images/info_bg.png") no-repeat;
+    background-size: 100% 100%;
+    padding: .5rem .3rem .2rem;
+  }
+  .selectYears{
+    position: absolute;
+    width: 1rem;
+    left: .4rem;
+    top: .62rem;
+    height: .36rem;
+    background: url("../images/btn_border.png") no-repeat;
+    background-size: 100% 100%;
+    &:after {
+      position: absolute;
+      content: "";
+      top: .06rem;
+      right: .06rem;
+      display: block;
+      width: .24rem;
+      height: .24rem;
+      border: 0;
+      outline: none;
+      background: url("../images/nav/arrow.png") no-repeat center center;
+      background-size: 50%;
+      transition: All .4s ease-in-out;
+      transform: rotate(-90deg);
+    }
+    dl{
+      display: block;
+      width: 100%;
+      height: .28rem;
+      position: relative;
+      overflow: visible;
+      dt,dd{
+        width: 100%; font-size: .2rem;padding: .05rem .1rem;
+        -webkit-text-stroke:.01rem $textBorder;font-family: $fontFamilyFZJTC;
+      }
+      dt{
+        line-height: .28rem;
+        color: #ffe659;
+      }
+      dd{
+        display: none;
+        position: absolute;
+        max-height: 2.2rem;
+        overflow: auto;
+        width: 100%;
+        z-index: 11;
+        top: .35rem;
+        border-radius: .04rem;
+        background-color: rgba(172, 192, 84, .9);
+        padding-bottom: 0;
+        div{
+          line-height: .32rem;
+          border-bottom: 1px solid rgba(255, 255, 255, .6);
+        }
+      }
+    }
+    &.active{
+      &:after{
+        transform: rotate(0deg);
+      }
+      dl dd{ display: block;}
+    }
+  }
+  .head-wrap {
+    display: block;
+    background: none;
+    border: 0;
+    outline: none;
+    width: 1.2rem;
+    position: absolute;
+    top: -0.79rem;
+    left: 50%;
+    margin-left: -.6rem;
+    z-index: 6;
+    //头像 样式设置
+    .photo {
+      width: 1rem;
+      height: 1rem;
+      margin: 0 auto;
+      padding: .03rem; /* border:.04rem solid rgba(203, 255, 194, .8);*/
+      position: relative;
+      z-index: 1;
+      .circle {
+        border-radius: 1rem;
+        overflow: hidden;
+        position: relative;
+        z-index: 10;
+        img {
+          width: 100%;
+          min-height: 100%;
+          position: relative;
+          -webkit-clip-path: inset(0 0 20% 0 round 0 0 0 0);
+        }
+      }
+      //circle end
+      .bg {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 1rem;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        &:before {
+          display: block;
+          content: '';
+          width: 100%;
+          height: 100%;
+          background-color: $opacityColor;
+          position: absolute;
+          -webkit-clip-path: inset(0 0 20% 0 round 0 0 0 0);
+        }
+      }
+      //bg end
+    }
+    //姓名设置
+    .name {
+      width: 100%; /*height: .35rem;*/
+      line-height: .32rem;
+      font-family: $fontFamilyFZJTC;
+      font-size: .18rem;
+      color: #ffe559;
+      text-align: center;
+      -webkit-text-stroke: .01rem #28241b;
+      position: relative;
+      top: -.23rem;
+      z-index: 10;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      margin-top: .05rem;
+    }
+  }
+  ul.class-list {
+    display: block;
+    height: 100%;
+    overflow-y: hidden;
+    font-size: 0;
+    margin-left: 1rem;
+    li {
+      position: relative;
+      float: left;
+      width: 50%;
+      -webkit-text-stroke: .01rem #28241b;
+      font-family: $fontFamilyFZJTC;
+      dl {
+        padding: .12rem 0;
+        dt, dd {
+          display: block;
+          width: 100%;
+          text-align: center;
+          line-height: 1.2;
+        }
+        dt {
+          color: #fff;
+          font-weight: 500;
+          font-size: .28rem;
+        }
+        dd {
+          color: #ffe659;
+          font-size: .56rem;
+        }
+      }
+    }
+    //li end
+  }
+  //ul.list end
+  button.btn-back{ width: .6rem; height: .6rem; border: 0; outline: none; background: url("../images/back2.png") no-repeat center; background-size: 100%; position: absolute; left: .4rem; bottom: .08rem;  }
+  //btn-back end
+}
+
+//- - - - - - - - - - - - - - - - - - - - - - - - 排课查询 courseSelect - - - - - - - - - - - - - - - - - - - - - - - -
+div.course-menu{ width: 100%; height: 100%; position: relative; z-index: 5;padding: 0 .41rem;font-family: $fontFamilyFZJTC;
+  //返回按钮
+  .back-box{ width: 100%; text-align: center; position: absolute; left: 0; bottom: 0; z-index: 99;
+    button.btn-history{ width: .6rem; height: .6rem; border: 0; outline: none; background: url('../images/back2.png') no-repeat center center; background-size: 100% 100%; position: absolute;bottom:.13rem;left:.415rem;}
+  }
+  .title-wrap, .main-wrap{ width: 100%;-webkit-text-stroke: .01rem $textBorder;
+  }
+  //title-wrap
+  .title-wrap{ height: .58rem;top: 0;position: relative;
+    .calendar{ display: inline-block;position: absolute;top: 0;left:0;
+      //input.class-date{ width: 3.12rem; height: .35rem; margin: .06rem auto; padding: 0 .08rem; font-size: .15rem; color: #ffe659; border-radius: .1rem; border: .03rem solid #50ff6e;; outline: none; background: rgba(0, 31, 0, .6) no-repeat; background-size: .1rem auto;
+      //  &:-moz-placeholder{ color: #ffe659; }
+      //  &::-webkit-input-placeholder{ color: #ffe659; }
+      //  &:-ms-input-placeholder{ color: #ffe659; }
+      //}
+      .vitual{width: 3.12rem;height: .35rem;margin: .06rem auto;padding: 0 .33rem 0 .1rem;font-size: .15rem;color:#ffe659;border-radius: .1rem;border:.03rem solid #50ff6e;background: rgba(0, 31, 0, .6) no-repeat; background-size: .1rem auto;
+        display: flex;justify-content: space-between; align-items: center;font-weight: bold;
+        span{
+        }
+      }
+      .calendar-icon{width:.19rem;height: .19rem;z-index: 11;position: absolute;right: .1rem;top: .13rem;cursor:pointer;}
+    }
+    .class-select{ display: inline-block;position: absolute;top: 0rem;left:3.55rem;
+      input.class-name{ width: 1.34rem; height: .35rem; margin: .06rem auto; padding: 0 .08rem; font-size: .15rem; color: #ffe659; border-radius: .1rem; border: .03rem solid #50ff6e;; outline: none; background: rgba(0, 31, 0, .6) no-repeat; background-size: .1rem auto;
+        &:-moz-placeholder{ color: #ffe659; }
+        &::-webkit-input-placeholder{ color: #ffe659; }
+        &:-ms-input-placeholder{ color: #ffe659; }
+      }
+      .search-icon{width:.19rem;height: .19rem;z-index: 11;position: relative;left: -.28rem;bottom:.02rem;cursor:pointer;}
+    }
+  }
+  .main-wrap{ height: 4.5rem; overflow-y: auto;
+    .course-title,.course-list{ width: 100%;font-size: .18rem;text-align: center;
+    }
+    .course-title{ display: flex;flex-wrap: nowrap;justify-content: space-around;color: $colorYellow;background-color: rgba(255,255,255,.5);margin: .045rem auto;border-radius: .3rem;border: .02rem solid rgba(255,255,255,.7);
+      span{ flex:0 0 auto;}
+    }
+    .course-title > span:nth-child(1), .course-list .course-nav > span:nth-child(1) { flex: 2;}
+    .course-title > span:nth-child(2), .course-list .course-nav > span:nth-child(2) { flex: 1;}
+    .course-title > span:nth-child(3), .course-list .course-nav > span:nth-child(3) { flex: 1;}
+    .course-title > span:nth-child(4), .course-list .course-nav > span:nth-child(4) { flex: 2;}
+    .course-title > span:nth-child(5), .course-list .course-nav > span:nth-child(5) { flex: 2;}
+    .course-title > span:nth-child(6), .course-list .course-nav > span:nth-child(6) { flex: 3;}
+    .course-list{
+      .course-nav{ display: flex;flex-wrap: nowrap;justify-content: space-around;color: $colorWhite;background-color: rgba(0,0,0,.3);margin: .045rem auto;border-radius: .3rem;border: .02rem solid rgba(255,255,255,.7);
+        span{ flex:0 0 auto;}
+      }
+    }
+  }
+  .date-plugin{/* position:absolute;top:0;left:0;width: 100%;height: 100%;*/ z-index: 999;}
+}

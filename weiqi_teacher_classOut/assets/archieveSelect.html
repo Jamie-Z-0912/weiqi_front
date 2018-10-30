@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9,IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8">
+    <title>绩效查询 教师端课堂系统</title>
+</head>
+<body>
+<!--assign-menu-->
+<div class="archieve-info-wrapper">
+    <div class="archieve-info-content">
+        <div class="selectYears" id="yearsSelect">
+            <dl>
+                <dt id="curYears">2018</dt>
+                <dd id="yearsOption">
+                    <div>2018</div>
+                    <div>2019</div>
+                    <div>2020</div>
+                    <div>2021</div>
+                    <div>2022</div>
+                    <div>2023</div>
+                    <div>2024</div>
+                    <div>2025</div>
+                    <div>2026</div>
+                    <div>2027</div>
+                    <div>2028</div>
+                </dd>
+            </dl>
+        </div>
+        <div id="headWrap"></div>
+        <ul class="class-list" id="archieveInfo"></ul>
+    </div>
+    <button type="button" class="btn-back" id="btnHistory"></button>
+</div>
+<!--/assign-menu-->
+<!--用户头像信息-->
+<script type="text/html" id="tpl-user">
+    <div class="head-wrap">
+        <div class="photo">
+            <div class="circle">
+                <img src="{{if head_url}}{{head_url}}{{else}}images/head2.jpg{{/if}}" alt="" />
+            </div>
+            <div class="bg"></div>
+        </div>
+        <div class="name">{{name}}</div>
+    </div>
+</script>
+<!--上课次数统计-->
+<script type="text/html" id="tpl-class">
+    <li>
+        <dl>
+            <dt>已上课次数</dt>
+            <dd>{{finish_class}}</dd>
+        </dl>
+    </li>
+    <li>
+        <dl>
+            <dt>已分配人数</dt>
+            <dd>{{real_member}}</dd>
+        </dl>
+    </li>
+    <li>
+        <dl>
+            <dt>未上课次数</dt>
+            <dd>{{total_class}}</dd>
+        </dl>
+    </li>
+    <li>
+        <dl>
+            <dt>实到人数</dt>
+            <dd>{{total_member}}</dd>
+        </dl>
+    </li>
+</script>
+<!--信息确认-->
+<script type="text/html" id="tpl-alert">
+    <div class="message-info">
+        <div class="content">{{=message}}</div>
+        <div class="btn-box">
+            <button type="button" class="btn-okay btn-alert-okay"></button>
+        </div>
+    </div>
+</script>
+<script type="text/javascript" src="js/pages/archieveSelect.js"></script>
+</body>
+</html>
