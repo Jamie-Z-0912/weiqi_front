@@ -212,23 +212,23 @@ div.chess-wrap{ visibility: hidden; width: 7rem; height: 5.4rem; background: url
         .content{ width: 100%; padding: .05rem .08rem; /* background: url("../images/box/mid.png") repeat-y left top; background-size: 100%;*/
           i{ display: inline-block; width: 30px; height: 30px; vertical-align: middle; background: no-repeat center center / auto 100%; margin-left: 6px;
             &:first-child{ margin-left: 0; }
-            &.btn-retreat{ background-image: url("../images/first.png"); }          //后退
+            &.btn-retreat{ background-image: url("../images/chess/first.png"); }          //后退
             &.btn-back{ background-image: url("../images/back.png"); }              //后一步
-            &.btn-next{ background-image: url("../images/next.png"); }              //下一步
-            &.btn-advance{ background-image: url("../images/last.png"); }           //最后
-            &.btn-alternate{ background-image: url("../images/wb.png"); }           //黑白
-            &.btn-black{ background-image: url("../images/black.png"); }          //黑
-            &.btn-white{ background-image: url("../images/white.png"); }          //白
-            &.btn-delete{ background-image: url("../images/d.png"); }             //提子
-            &.btn-triangle{ background-image: url("../images/t.png"); }           //三角形
-            &.btn-triangle2{ background-image: url("../images/t_black.png"); }           //三角形
-            &.btn-square{ background-image: url("../images/q.png"); }             //正方形
-            &.btn-square2{ background-image: url("../images/q_black.png"); }             //正方形
-            &.btn-roundness{ background-image: url("../images/c.png"); }        //圆
-            &.btn-roundness2{ background-image: url("../images/c_black.png"); }        //圆
-            &.btn-fork{ background-image: url("../images/x.png"); }             //差
-            &.btn-fork{ background-image: url("../images/x_black.png"); }             //差
-            &.btn-wipe{ background-image: url("../images/w.png"); }           //擦除
+            &.btn-next{ background-image: url("../images/chess/next.png"); }              //下一步
+            &.btn-advance{ background-image: url("../images/chess/last.png"); }           //最后
+            &.btn-alternate{ background-image: url("../images/chess/wb.png"); }           //黑白
+            &.btn-black{ background-image: url("../images/chess/black.png"); }          //黑
+            &.btn-white{ background-image: url("../images/chess/white.png"); }          //白
+            &.btn-delete{ background-image: url("../images/chess/d.png"); }             //提子
+            &.btn-triangle{ background-image: url("../images/chess/t.png"); }           //三角形
+            &.btn-triangle2{ background-image: url("../images/chess/t_black.png"); }           //三角形
+            &.btn-square{ background-image: url("../images/chess/q.png"); }             //正方形
+            &.btn-square2{ background-image: url("../images/chess/q_black.png"); }             //正方形
+            &.btn-roundness{ background-image: url("../images/chess/c.png"); }        //圆
+            &.btn-roundness2{ background-image: url("../images/chess/c_black.png"); }        //圆
+            &.btn-fork{ background-image: url("../images/chess/x.png"); }             //差
+            &.btn-fork{ background-image: url("../images/chess/x_black.png"); }             //差
+            &.btn-wipe{ background-image: url("../images/chess/w.png"); }           //擦除
           }
           //i end
         }
